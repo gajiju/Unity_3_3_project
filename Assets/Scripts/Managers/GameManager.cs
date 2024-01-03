@@ -3,16 +3,32 @@ using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     static GameManager _instance;
-    static ResourcesManager _resources = new ResourcesManager();
-    public static GameManager Instance {  get { return _instance; } }
-    public static ResourcesManager Resource { get { return _resources; } }
+    ResourcesManager _resources = new ResourcesManager();
+    InputManager _input = new InputManager();
 
+    public static GameManager Instance() { Init();  return _instance;}
+    public static ResourcesManager Resource { get { return _instance._resources; } }
 
-    void Init()
+    public static InputManager Input { get { return _instance._input; } }
+
+    
+
+    private void Start()
+    {
+        Init();
+    }
+
+    private void Update()
+    {
+        _input.OnUpdate();
+    }
+
+    static void Init()
     {
         if(_instance == null)
         {
