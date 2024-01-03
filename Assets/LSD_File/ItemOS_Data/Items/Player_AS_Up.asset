@@ -16,5 +16,5 @@ MonoBehaviour:
   stats:
   - name: Player_AS
     value: 5
-    Tiem: 30
-  gameObject: {fileID: 2495695665250258272, guid: bf2be866889a87f47a7692ebf5ee2e44, type: 3}
+    buffTime: 30
+  prefab: {fileID: 726123980392875945, guid: 670be3e443f69f443be59f61cf4f8bf8, type: 3}

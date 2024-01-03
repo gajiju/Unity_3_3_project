@@ -16,5 +16,5 @@ MonoBehaviour:
   stats:
   - name: Player_CurrentSp
     value: -10
-    Tiem: 0
-  gameObject: {fileID: 2495695665250258272, guid: bf2be866889a87f47a7692ebf5ee2e44, type: 3}
+    buffTime: 0
+  prefab: {fileID: 2495695665250258272, guid: bf2be866889a87f47a7692ebf5ee2e44, type: 3}

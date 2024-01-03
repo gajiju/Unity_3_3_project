@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DropTest : MonoBehaviour
+public class ItemDrop : MonoBehaviour
 {
     public ItemDropSO itemDropSO;
     private SphereCollider Collider;

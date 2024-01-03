@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Items : MonoBehaviour
@@ -29,16 +30,18 @@ public class Items : MonoBehaviour
     /// <summary>
     /// 아이템 픽업 관한 코드
     /// </summary>
-    private void ItemPickUp()
-    {
-        // 캐릭터에게 해당 아이템 능력 코드 작성
-    }
     private void OnTriggerEnter(Collider collision)
     {
         // 이벤트 Player 태그 충돌 감지
         if (collision.gameObject.tag == "Player")
         {
-            ItemPickUp();
+            ItemPickup();
         }
+    }
+
+    private void ItemPickup()
+    {
+        // 아이템 픽업시 효과
+        Debug.Log("아이템을 주웠다.");
     }
 }
