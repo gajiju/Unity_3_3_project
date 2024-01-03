@@ -817,6 +817,10 @@ MonoBehaviour:
   home: {x: 0, y: 0}
   brain: {fileID: 0}
   following: 0
+  Monster_MaxHp: 100
+  Monster_CurrentHp: 0
+  exp: {fileID: 0}
+  tra: {fileID: 0}
 --- !u!23 &1623055170
 MeshRenderer:
   m_ObjectHideFlags: 0

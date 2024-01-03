@@ -36,7 +36,8 @@ public class Monster : MonoBehaviour
             animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         //brain = GameObject.FindGameObjectWithTag("brain").transform;
-      //  home = transform.position;
+        //  home = transform.position;
+        Monster_CurrentHp = Monster_MaxHp;
  
     }
     void FixedUpdate()
@@ -56,26 +57,18 @@ public class Monster : MonoBehaviour
       
 
 
-
-
-
-
-        //   transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
-
-
-        // RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.right, 1, LayerMask.GetMask("Player"));
-        // RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.left, 1, LayerMask.GetMask("Player"));
-        if (rayHit.collider == null)
+        if (following == false)
         {
-           // transform.position =  Vector2.MoveTowards(transform.position, player.position, Time.deltaTime * speed);
-          
-            nextThinkTime = Random.Range(2f, 5f);
-            Invoke("Think", nextThinkTime);
-        }
-        else
-        { 
+            if (rayHit.collider == null)
+            {
+           nextThinkTime = Random.Range(2f, 5f);
+                Invoke("Think", nextThinkTime);
+            }
+            else
+            {
 
-        }
+            }
+        }       
     }
     void Think()
    {
@@ -86,14 +79,12 @@ public class Monster : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            Debug.Log("sss");
+            following = true;
+          //  Debug.Log("sss");
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
             Invoke("Attack", nextThinkTime);
 
-
-            //   player.position = Vector3.left;
-
-            following = true;
+         
             if (following == true)
             {
 
@@ -111,6 +102,13 @@ public class Monster : MonoBehaviour
             Debug.Log("벗어남");
         }
     }
+
+
+
+
+
+
+    
 
   
 }
