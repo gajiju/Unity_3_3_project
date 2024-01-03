@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e885c069c5c13e4f843bff99d5d555f, type: 3}
-  m_Name: CurHP_Down
+  m_Name: Player_MS_Down
   m_EditorClassIdentifier: 
-  itemName: CurHP_Down
+  itemName: Player_MS_Down
   stats:
-  - name: CurHP_Down
-    value: -1
-  gameObject: {fileID: 726123980392875945, guid: 670be3e443f69f443be59f61cf4f8bf8, type: 3}
+  - name: Player_MS
+    value: -5
+    Tiem: 10
+  gameObject: {fileID: 2495695665250258272, guid: bf2be866889a87f47a7692ebf5ee2e44, type: 3}
