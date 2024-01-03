@@ -24,7 +24,7 @@ public class ItemSO : ScriptableObject
 
         /* name 에 들어갈 값
         +값 혹은 -값 */
-        public int value; // 능력치 값
+        public float value; // 능력치 값
         public float buffTime; // 버프 시간 1f = 1초, 0f = 바로 적용
     }
 
