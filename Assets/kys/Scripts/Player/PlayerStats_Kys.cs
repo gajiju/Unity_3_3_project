@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder.MeshOperations;
@@ -22,10 +23,10 @@ public class PlayerData
 public class PlayerStats_Kys : MonoBehaviour
 {
 
+    PlayerData userdata = new PlayerData();
 
     #region 플레이어 이동관련
     public InputAction PlayerMove; //플레이어 컨트롤러
-
     [SerializeField] float _speed = 10.0f; //이동속도
 
     #endregion
@@ -48,7 +49,9 @@ public class PlayerStats_Kys : MonoBehaviour
         Jump,
         UnJump,
         Attack,
+        Pain,
         Die
+
     }
 
     Player_State State = Player_State.Idle;
@@ -71,7 +74,12 @@ public class PlayerStats_Kys : MonoBehaviour
 
     public void Update()
     {
-        
+        if(userdata.Player_CurrentHp == 0)
+        {
+            State = Player_State.Die;
+            OnDie();
+        }
+
         switch (State)
         {
             case Player_State.Idle:
@@ -86,8 +94,17 @@ public class PlayerStats_Kys : MonoBehaviour
             case Player_State.Attack:
                 OnAttack();
                 break;
+            case Player_State.Pain:
+                OnPain();
+                break;
+
 
         }
+    }
+    private void FixedUpdate()
+    {
+        if (userdata.Player_CurrentHp == 0)
+            return;
     }
 
     #region 대기
@@ -136,20 +153,21 @@ public class PlayerStats_Kys : MonoBehaviour
     {
         Animator ani = GetComponent<Animator>();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKey(KeyCode.Space) && (State == Player_State.Idle || State == Player_State.Move) )
         {
-            State = Player_State.Attack;
-            if(State == Player_State.Attack)
+            State = Player_State.Jump;
+            if (IsJump == false)
             {
-                ani.SetBool("Attack", true);
-                State = Player_State.Idle;
+                IsJump = true;
+                ani.SetBool("Jump", true);
+                rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
             }
             else
             {
                 return;
             }
-
         }
+
     }
     #endregion
     private void OnCollisionEnter(Collision collision)
@@ -157,26 +175,32 @@ public class PlayerStats_Kys : MonoBehaviour
         Animator ani = GetComponent<Animator>();
         if (collision.gameObject.CompareTag("Ground"))
         {
-            ani.SetBool("Jump", false);
+
+            ani.SetTrigger("JumpEnd");
+            ani.SetBool("Jump",false);
             IsJump = false;
             
             State = Player_State.Idle;
         }
+        if(collision.gameObject.CompareTag("Monster") && State == Player_State.Attack)
+        {
+
+            
+        }
+
     }
 
 
     public void OnAttack()
     {
         Animator ani = GetComponent<Animator>();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (IsJump == false)
+            State = Player_State.Attack;
+            if (State == Player_State.Attack)
             {
-                State = Player_State.Jump;
-                ani.SetBool("Jump", true);
-                IsJump = true;
-                rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-
+                ani.SetTrigger("Attack");
+                State = Player_State.Idle;
             }
             else
             {
@@ -187,11 +211,19 @@ public class PlayerStats_Kys : MonoBehaviour
     }
     public void OnHitEvent()
     {
+        
         State = Player_State.Idle;
+    }
+
+    public void OnPain()
+    {
+
     }
 
     public void OnDie()
     {
-
+        Animator ani = GetComponent<Animator>();
+        State = Player_State.Die;
+        ani.SetTrigger("ded");
     }
 }
