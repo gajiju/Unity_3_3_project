@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 1841978759}
   - component: {fileID: 1841978758}
   - component: {fileID: 1841978762}
+  - component: {fileID: 1841978763}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Monster
@@ -601,6 +602,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1841978763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841978757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248b9ec156f970845a661ee7682b80c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 10
+  curHp: 10
 --- !u!137 &10185191565424159
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
