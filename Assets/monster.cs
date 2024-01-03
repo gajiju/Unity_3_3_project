@@ -4,12 +4,12 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     public LayerMask isLayer;
-    Rigidbody2D rigid;
+    Rigidbody rigid;
     public int nextMove;
     float nextThinkTime;
      Animator animator;
 
-    public Transform player;
+     Transform player;
     public float speed;
     public Vector2 home;
 
@@ -19,7 +19,7 @@ public class Monster : MonoBehaviour
 
     void Start()
     {
-        rigid = GetComponent<Rigidbody2D>();
+        rigid = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         //brain = GameObject.FindGameObjectWithTag("brain").transform;
@@ -28,17 +28,24 @@ public class Monster : MonoBehaviour
     }
     void FixedUpdate()
     {
+
         rigid.velocity = new Vector2(nextMove, rigid.velocity.y);
     Vector2 frontVec = new Vector2(rigid.position.x + nextMove, rigid.position.y);
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Ground"));
-       // RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.right, 1, LayerMask.GetMask("Player"));
-       // RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.left, 1, LayerMask.GetMask("Player"));
+
+
+
+     //   transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
+
+
+        // RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.right, 1, LayerMask.GetMask("Player"));
+        // RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.left, 1, LayerMask.GetMask("Player"));
         if (rayHit.collider == null)
         {
            // transform.position =  Vector2.MoveTowards(transform.position, player.position, Time.deltaTime * speed);
           
             nextThinkTime = Random.Range(2f, 5f);
-            Invoke("Think", nextThinkTime);
+            //Invoke("Think", nextThinkTime);
         }
         //else
        // {
@@ -58,26 +65,31 @@ public class Monster : MonoBehaviour
       nextMove = Random.Range(-1, 2);
    }
 
-    
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
             Debug.Log("sss");
-following = true;
-           if (following == true)
-        {
- transform.position =  Vector2.MoveTowards(transform.position, player.position, Time.deltaTime * speed);
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
 
+            //   player.position = Vector3.left;
+
+            following = true;
+            if (following == true)
+            {
+
+
+            }
         }
     }
-    }
+  
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
             following = false;
+            Debug.Log("벗어남");
         }
     }
 
