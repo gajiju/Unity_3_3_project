@@ -57,6 +57,6 @@ public class ItemDropSO : ScriptableObject
         {
             return;
         }
-        Instantiate(item.gameObject, pos, Quaternion.identity);
+        Instantiate(item.prefab, pos, Quaternion.identity);
     }
 }
