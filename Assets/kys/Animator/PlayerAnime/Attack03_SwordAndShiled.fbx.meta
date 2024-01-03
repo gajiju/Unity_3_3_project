@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: ef3c57cd74b190a48afd3f0051436078
+guid: 9a6c3585df66f2e4782635fc7a23494c
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Attack02_SwordAndShiled
+    second: Attack03_SwordAndShiled
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -26,7 +26,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 0
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -35,7 +35,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack02_SwordAndShiled
+      name: Attack03_SwordAndShiled
       takeName: Take 001
       internalID: 0
       firstFrame: 0
