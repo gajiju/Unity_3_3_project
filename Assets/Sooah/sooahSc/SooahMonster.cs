@@ -56,7 +56,7 @@ public class SooahMonster : MonoBehaviour
 
     private void Start()
     {
-        SetState(AIState.Wandering);
+        SetState(AIState.Fleeing);
     }
 
     private void Update()
@@ -119,11 +119,10 @@ public class SooahMonster : MonoBehaviour
         {
             SetState(AIState.Idle);
             Invoke("WanderToNewLocation", Random.Range(minWanderWaitTime, maxWanderWaitTime));
-
-            if(playerDistance < detectDistance)
-            {
-                SetState(AIState.Attacking);
-            }
+        }
+        if (playerDistance < detectDistance)
+        {
+            SetState(AIState.Attacking);
         }
     }
 
