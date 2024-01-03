@@ -45,6 +45,7 @@ public class SooahMonster : MonoBehaviour
     private Animator animator;
     private SkinnedMeshRenderer meshRenderers;
     [SerializeField] private GameObject testOBJ;
+    [SerializeField] private MonsterSOO monsterSOO;
 
     private void Awake()
     {
@@ -87,8 +88,9 @@ public class SooahMonster : MonoBehaviour
 
     private void AttackingUpdate()
     {
-        if(playerDistance > attackDistance || isPlayerInFieldOfView())
+        if(playerDistance > attackDistance || !isPlayerInFieldOfView())
         {
+            Debug.Log(playerDistance);
             agent.isStopped = false;
             NavMeshPath path = new NavMeshPath();
             if(agent.CalculatePath(testOBJ.transform.position, path))
@@ -106,7 +108,8 @@ public class SooahMonster : MonoBehaviour
             if(Time.time -lastAttackTime > attackRate)
             {
                 lastAttackTime = Time.time;
-                //플레이어컨트롤.데미지주게
+                Debug.Log("때렸다" + monsterSOO.Damage);
+
                 animator.speed = 1;
                 animator.SetTrigger("Attack");
             }

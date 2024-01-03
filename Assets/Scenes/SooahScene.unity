@@ -172,7 +172,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 37afce0ee534cd34e84dc3947aa20eb5, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: e511955f457f09f42a5f4d70b8f04da8, type: 2}
   m_BuildHeightMesh: 0
 --- !u!64 &372105446
 MeshCollider:
@@ -762,3 +762,4 @@ MonoBehaviour:
   attackDistance: 5
   fieldOfView: 120
   testOBJ: {fileID: 1207942232}
+  monsterSOO: {fileID: 11400000, guid: 4a8d36b1d354e504187a393e2649d3b9, type: 2}
