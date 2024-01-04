@@ -11,9 +11,6 @@ public class PlayerMoveController : MonoBehaviour
 
     private void Start()
     {
-        GameManager gmg = GameManager.Instance();
-
-
 
         GameManager.Input.KeyAction -= OnKeyBord;
         GameManager.Input.KeyAction += OnKeyBord;
