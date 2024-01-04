@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static PlayerStats_JY;
 
 public class PlayerStatsHandler_JY : MonoBehaviour
 {
@@ -16,17 +15,10 @@ public class PlayerStatsHandler_JY : MonoBehaviour
 
     private void UpdateCharacterStats()
     {
-        //AttackSO attackSO = null;
-        //if (baseStats.attackSO != null)
-        //{
-        //    attackSO = Instantiate(baseStats.attackSO);
-        //}
-
-        //CurrentStates = new CharacterStats { attackSO = attackSO };
-        // TODO
+        CurrentStats = new CharacterStats ();
+        CurrentStats.statsChangeType = baseStats.statsChangeType;
         CurrentStats.MaxHp = baseStats.MaxHp;
         CurrentStats.MaxSp = baseStats.MaxSp;
         CurrentStats.MS = baseStats.MS;
-
     }
 }

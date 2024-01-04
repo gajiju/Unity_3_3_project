@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class HpSystem_JY : MonoBehaviour
@@ -15,6 +16,7 @@ public class HpSystem_JY : MonoBehaviour
     public event Action OnHeal;
     public event Action OnDeath;
     public event Action OnInvincibilityEnd;
+    public Image uiBar;
 
     public float CurrentHp { get; private set; }
 
@@ -74,6 +76,10 @@ public class HpSystem_JY : MonoBehaviour
     private void CallDeath()
     {
         OnDeath?.Invoke();
+    }
+    public float GetPercentage()
+    {
+        return CurrentHp / MaxHp;
     }
 }
 
