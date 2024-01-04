@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Farrange_monster : MonoBehaviour
 {
+    public bool be_ranger;
+
     public LayerMask isLayer;
     Rigidbody rigid;
     public int nextMove;
@@ -79,9 +81,20 @@ public class Farrange_monster : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
+            if (be_ranger == true)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -Time.deltaTime * speed);
+            }
+            else
+            {
+                if (be_ranger == false)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
+                }
+            }
             following = true;
             //  Debug.Log("sss");
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -Time.deltaTime * speed);
+           
             Invoke("Attack", nextThinkTime);
 
          
