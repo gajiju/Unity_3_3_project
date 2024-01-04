@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +18,8 @@ public class GameManager : MonoBehaviour
 
     public static InputManager Input { get { return _instance._input; } }
 
-    
+    public Image Hpbar;
+    public Image Spbar;
 
     private void Start()
     {
