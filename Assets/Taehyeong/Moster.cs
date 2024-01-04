@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Monster : MonoBehaviour
+public class Farrange_monster : MonoBehaviour
 {
+    public GameObject bullet;
+    public bool be_ranger;
+
     public LayerMask isLayer;
     Rigidbody rigid;
     public int nextMove;
@@ -36,7 +39,8 @@ public class Monster : MonoBehaviour
             animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         //brain = GameObject.FindGameObjectWithTag("brain").transform;
-      //  home = transform.position;
+        //  home = transform.position;
+        Monster_CurrentHp = Monster_MaxHp;
  
     }
     void FixedUpdate()
@@ -56,26 +60,18 @@ public class Monster : MonoBehaviour
       
 
 
-
-
-
-
-        //   transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
-
-
-        // RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.right, 1, LayerMask.GetMask("Player"));
-        // RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.left, 1, LayerMask.GetMask("Player"));
-        if (rayHit.collider == null)
+        if (following == false)
         {
-           // transform.position =  Vector2.MoveTowards(transform.position, player.position, Time.deltaTime * speed);
-          
-            nextThinkTime = Random.Range(2f, 5f);
-            Invoke("Think", nextThinkTime);
-        }
-        else
-        { 
+            if (rayHit.collider == null)
+            {
+           nextThinkTime = Random.Range(2f, 5f);
+                Invoke("Think", nextThinkTime);
+            }
+            else
+            {
 
-        }
+            }
+        }       
     }
     void Think()
    {
@@ -86,14 +82,23 @@ public class Monster : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            Debug.Log("sss");
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
+            if (be_ranger == true)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -Time.deltaTime * speed);
+            }
+            else
+            {
+                if (be_ranger == false)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
+                }
+            }
+            following = true;
+            //  Debug.Log("sss");
+           
             Invoke("Attack", nextThinkTime);
 
-
-            //   player.position = Vector3.left;
-
-            following = true;
+         
             if (following == true)
             {
 
@@ -111,6 +116,26 @@ public class Monster : MonoBehaviour
             Debug.Log("벗어남");
         }
     }
+
+
+
+    public void Attack()
+    {
+        if(be_ranger == true)
+        {
+            Instantiate(bullet);
+        }
+        else
+        {
+            if(be_ranger == false)
+            {
+                animator.SetTrigger("CloseAttack");
+            }
+        }
+    }
+
+
+    
 
   
 }
