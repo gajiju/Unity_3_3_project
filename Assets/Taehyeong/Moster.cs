@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Farrange_monster : MonoBehaviour
 {
+    public GameObject bullet;
     public bool be_ranger;
 
     public LayerMask isLayer;
@@ -118,7 +119,20 @@ public class Farrange_monster : MonoBehaviour
 
 
 
-
+    public void Attack()
+    {
+        if(be_ranger == true)
+        {
+            Instantiate(bullet);
+        }
+        else
+        {
+            if(be_ranger == false)
+            {
+                animator.SetTrigger("CloseAttack");
+            }
+        }
+    }
 
 
     
