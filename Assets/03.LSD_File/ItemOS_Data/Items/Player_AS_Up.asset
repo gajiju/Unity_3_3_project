@@ -17,4 +17,4 @@ MonoBehaviour:
   - name: Player_AS
     value: 5
     buffTime: 30
-  prefab: {fileID: 726123980392875945, guid: 670be3e443f69f443be59f61cf4f8bf8, type: 3}
+  prefab: {fileID: 3015174862307156358, guid: 4cc28c0e85ec7d341ad69a501fe7d6fb, type: 3}

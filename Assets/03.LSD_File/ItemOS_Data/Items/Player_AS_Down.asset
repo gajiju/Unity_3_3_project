@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e885c069c5c13e4f843bff99d5d555f, type: 3}
   m_Name: Player_AS_Down
   m_EditorClassIdentifier: 
-  itemName: Player_AS_Down
+  itemName: Player_AS_Up
   stats:
   - name: Player_AS
-    value: -5
+    value: -2
     buffTime: 10
-  prefab: {fileID: 2495695665250258272, guid: bf2be866889a87f47a7692ebf5ee2e44, type: 3}
+  prefab: {fileID: 3015174862307156358, guid: 398b982d78e3afa43acb9ae080a93bb6, type: 3}

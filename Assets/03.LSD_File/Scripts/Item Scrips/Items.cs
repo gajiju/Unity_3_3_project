@@ -1,15 +1,14 @@
-using System;
 using UnityEngine;
 
 public class Items : MonoBehaviour
 {
     [SerializeField] private ItemSO itemSO;
 
-    private SphereCollider itemCollider;
+    private Collider itemCollider;
 
     private void Awake()
     {
-        itemCollider = GetComponent<SphereCollider>();
+        itemCollider = GetComponent<Collider>();
 
         if (gameObject != null)
         {
@@ -35,13 +34,44 @@ public class Items : MonoBehaviour
         // 이벤트 Player 태그 충돌 감지
         if (collision.gameObject.tag == "Player")
         {
-            ItemPickup();
+            if (!collision.isTrigger)
+            {
+                ItemPickup();
+                Destroy(gameObject);
+            }
         }
     }
 
     private void ItemPickup()
     {
-        // 아이템 픽업시 효과
-        Debug.Log("아이템을 주웠다.");
+        // 아이템 픽업시 능력치 증가 효과 로직
+        /* case 에 들어갈 string 값
+        Player_CurrentHp_Up 현재체력 증가
+        Player_MaxHp_Up 최대체력 증가
+        Player_CurrentSp_Up 현재스태미나 증가
+        Player_MaxSp_Up 최대스태미나 증가
+        Player_Atk_Up 공격력 증가
+        Player_AS_Up 공격속도 증가
+        Player_MS_Up 이동속도 증가
+        */
+        var item = itemSO;
+        switch (item.itemName)
+        {
+            case "Player_CurrentHp_Up":
+                Debug.Log("현재 체력 증가");
+                break;
+            case "Player_CurrentSp_Up":
+                Debug.Log("현재 스태미나 증가");
+                break;
+            case "Player_Atk_Up":
+                Debug.Log("공격력 증가");
+                break;
+            case "Player_AS_Up":
+                Debug.Log("공격속도 증가");
+                break;
+            case "Player_MS_Up":
+                Debug.Log("이동속도 증가");
+                break;
+        }
     }
 }
