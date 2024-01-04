@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ItemDrop", menuName = "Item/ItemData/ItemDrop", order = 1)]
+[CreateAssetMenu(fileName = "ItemDrop", menuName = "Item/ItemDrop", order = 1)]
 public class ItemDropSO : ScriptableObject
 {
     [Serializable]
