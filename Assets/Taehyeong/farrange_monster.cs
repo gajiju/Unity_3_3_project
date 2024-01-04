@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Monster : MonoBehaviour
+public class Farrange_monster : MonoBehaviour
 {
     public LayerMask isLayer;
     Rigidbody rigid;
@@ -80,10 +80,8 @@ public class Monster : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             following = true;
-          //  Debug.Log("sss");
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
-
-          
+            //  Debug.Log("sss");
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -Time.deltaTime * speed);
             Invoke("Attack", nextThinkTime);
 
          
