@@ -1,14 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor.TerrainTools;
+//using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 using UnityEngine.ProBuilder.MeshOperations;
 
+[Serializable]
 public class PlayerData
 {
     public string Player_Name = "홍길동";
@@ -24,7 +26,7 @@ public class PlayerData
 public class PlayerStats_Kys : MonoBehaviour
 {
 
-    PlayerData userdata = new PlayerData();
+    public PlayerData userdata = new PlayerData();
 
     #region 플레이어 이동관련
     public InputAction PlayerMove; //플레이어 컨트롤러
