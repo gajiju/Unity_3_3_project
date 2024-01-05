@@ -13,14 +13,14 @@ using UnityEngine.ProBuilder.MeshOperations;
 [Serializable]
 public class PlayerData
 {
-    public string Player_Name = "È«±æµ¿";
-    public int Player_CurrentHp = 100; //ÇöÀçÃ¼·Â
-    public int Player_MaxHp = 100; //ÃÖ´ë Ã¼·Â
-    public int Player_CurrentSp = 100; //ÇöÀç½ºÅÂ¹Ì³ª
-    public int Player_MaxSp = 100; //ÃÖ´ë½ºÅÂ¹Ì³ª
-    public int Player_Atk = 10; //°ø°Ý·Â
-    public int Player_AS = 5; //°ø°Ý¼Óµµ
-    public int Player_MS = 5; //ÀÌµ¿¼Óµµ
+    public string Player_Name = "È«ï¿½æµ¿";
+    public int Player_CurrentHp = 50; //ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½
+    public int Player_MaxHp = 100; //ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½
+    public int Player_CurrentSp = 50; //ï¿½ï¿½ï¿½ç½ºï¿½Â¹Ì³ï¿½
+    public int Player_MaxSp = 100; //ï¿½Ö´ë½ºï¿½Â¹Ì³ï¿½
+    public int Player_Atk = 10; //ï¿½ï¿½ï¿½Ý·ï¿½
+    public int Player_AS = 5; //ï¿½ï¿½ï¿½Ý¼Óµï¿½
+    public int Player_MS = 5; //ï¿½Ìµï¿½ï¿½Óµï¿½
 }
 
 public class PlayerStats_Kys : MonoBehaviour
@@ -28,16 +28,16 @@ public class PlayerStats_Kys : MonoBehaviour
 
     public PlayerData userdata = new PlayerData();
 
-    #region ÇÃ·¹ÀÌ¾î ÀÌµ¿°ü·Ã
-    public InputAction PlayerMove; //ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯
-    [SerializeField] float _speed = 10.0f; //ÀÌµ¿¼Óµµ
+    #region ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½
+    public InputAction PlayerMove; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
+    [SerializeField] float _speed = 10.0f; //ï¿½Ìµï¿½ï¿½Óµï¿½
 
     #endregion
 
     
     float _Radio = 0;
 
-    #region Á¡ÇÁ ±¸Çö
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]float JumpPower = 10.0f;
     private Rigidbody rigid;
     bool IsJump = false;
@@ -53,8 +53,9 @@ public class PlayerStats_Kys : MonoBehaviour
         UnJump,
         Attack,
         Pain,
+        Whirlwind,
+        Splint,
         Die
-
     }
 
     Player_State State = Player_State.Idle;
@@ -97,6 +98,12 @@ public class PlayerStats_Kys : MonoBehaviour
             case Player_State.Attack:
                 OnAttack();
                 break;
+            case Player_State.Whirlwind:
+                OnWhirlwind();
+                break;
+            case Player_State.Splint:
+                OnSplint();
+                break;
             case Player_State.Pain:
                 OnPain();
                 break;
@@ -110,7 +117,7 @@ public class PlayerStats_Kys : MonoBehaviour
             return;
     }
 
-    #region ´ë±â
+    #region ï¿½ï¿½ï¿½
     public void OnIdle()
     {
         if (State == Player_State.Die)
@@ -122,7 +129,7 @@ public class PlayerStats_Kys : MonoBehaviour
         ani.SetFloat("Idle_Run_Radio", _Radio);
     }
     #endregion
-    #region ÀÌµ¿
+    #region ï¿½Ìµï¿½
     public void OnMove()
     {
         Animator ani = GetComponent<Animator>();
@@ -151,7 +158,7 @@ public class PlayerStats_Kys : MonoBehaviour
 
     }
     #endregion
-    #region Á¡ÇÁ
+    #region ï¿½ï¿½ï¿½ï¿½
     public void OnJump()
     {
         Animator ani = GetComponent<Animator>();
@@ -192,7 +199,7 @@ public class PlayerStats_Kys : MonoBehaviour
 
 
             }
-            else if ((State == Player_State.Idle || State == Player_State.Move)) //ÇÇ°Ý
+            else if ((State == Player_State.Idle || State == Player_State.Move)) //ï¿½Ç°ï¿½
             {
                 State = Player_State.Pain;
             }
@@ -201,7 +208,7 @@ public class PlayerStats_Kys : MonoBehaviour
 
 
 
-    #region °ø°Ý
+    #region ï¿½ï¿½ï¿½ï¿½
     public void OnAttack()
     {
         Animator ani = GetComponent<Animator>();
@@ -246,7 +253,7 @@ public class PlayerStats_Kys : MonoBehaviour
 
     #endregion
 
-    #region ÇÇ°Ý
+    #region ï¿½Ç°ï¿½
     public void OnPain()
     {
         Animator ani = GetComponent<Animator>();
@@ -254,7 +261,7 @@ public class PlayerStats_Kys : MonoBehaviour
             return;
         else if(State == Player_State.Pain)
         {
-            Debug.Log("¾Æ¾ß");
+            Debug.Log("ï¿½Æ¾ï¿½");
             ani.SetTrigger("Pain");
 
             /*
@@ -273,7 +280,30 @@ public class PlayerStats_Kys : MonoBehaviour
     }
     #endregion
 
-    #region Á×À½
+    public void OnSplint()
+    {
+        Animator ani = GetComponent<Animator>();
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (State == Player_State.Die)
+                return;
+            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump)
+            {
+                _speed = 15f; 
+                ani.SetBool("Splint", true);
+            }
+        }
+        else
+        {
+            _speed = 10f;
+            ani.SetBool("Splint", false);
+            State = Player_State.Idle;
+        }
+    }
+
+
+
+    #region ï¿½ï¿½ï¿½ï¿½
     public void OnDie()
     {
         Animator ani = GetComponent<Animator>();
