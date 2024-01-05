@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a9a4cbdb3f92743843c87c998943db, type: 3}
   m_Name: MonsterSO
   m_EditorClassIdentifier: 
-  <PlayerChasingRange>k__BackingField: 10
+  <FollowRange>k__BackingField: 10
   <AttackRange>k__BackingField: 1.5
   <Damage>k__BackingField: 5
+  <speed>k__BackingField: 2
+  <maxHP>k__BackingField: 10
