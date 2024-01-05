@@ -17,4 +17,4 @@ MonoBehaviour:
   - name: Player_CurrentSp
     value: 30
     buffTime: 0
-  prefab: {fileID: 726123980392875945, guid: 670be3e443f69f443be59f61cf4f8bf8, type: 3}
+  prefab: {fileID: 5626593835473199660, guid: e72a7b599e40e6442be4ecac77d5b794, type: 3}
