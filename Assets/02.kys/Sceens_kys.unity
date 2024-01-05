@@ -614,8 +614,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248b9ec156f970845a661ee7682b80c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 10
-  curHp: 10
+  Monster_maxHp: 100
+  Monster_curHp: 100
+  Monster_Attack: 50
 --- !u!137 &10185191565424159
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -3399,6 +3400,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90fee855dea83340a509de602d6f155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userdata:
+    Player_Name: "\u022B\uFFFD\u6D7F"
+    Player_CurrentHp: 100
+    Player_MaxHp: 100
+    Player_CurrentSp: 100
+    Player_MaxSp: 100
+    Player_Atk: 10
+    Player_AS: 5
+    Player_MS: 5
   PlayerMove:
     m_Name: Player Move
     m_Type: 0
