@@ -21445,7 +21445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &956037742
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28498,7 +28498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1564611477
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28909,14 +28909,13 @@ GameObject:
   - component: {fileID: 1717524608}
   - component: {fileID: 1717524607}
   - component: {fileID: 1717524611}
-  - component: {fileID: 1717524612}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1717524607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29016,19 +29015,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: {fileID: 1564611476}
---- !u!114 &1717524612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717524606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf58935bce8387a49b91080d36a70d74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseImage: {fileID: 1943346057}
 --- !u!1 &1732856508
 GameObject:
   m_ObjectHideFlags: 0
@@ -30308,6 +30294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1905261880}
+  - component: {fileID: 1905261881}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -30336,6 +30323,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1905261881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905261879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf58935bce8387a49b91080d36a70d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseImage: {fileID: 1943346057}
 --- !u!1 &1920979996
 GameObject:
   m_ObjectHideFlags: 0
@@ -30550,7 +30550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1943346058
 RectTransform:
   m_ObjectHideFlags: 0

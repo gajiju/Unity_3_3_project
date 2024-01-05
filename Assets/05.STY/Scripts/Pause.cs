@@ -31,6 +31,8 @@ public class Pause : MonoBehaviour
             {
                 Time.timeScale = 1f;
                 IsPause = false;
+                pauseImage.SetActive(false);
+
                 return;
             }
 
