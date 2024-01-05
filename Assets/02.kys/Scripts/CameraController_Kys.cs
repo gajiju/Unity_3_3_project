@@ -12,6 +12,6 @@ public class CameraController_Kys : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(_rotaition);
         transform.position = _player.transform.position + _position;
-        transform.LookAt(_player.transform);
+        //transform.LookAt(_player.transform);
     }
 }

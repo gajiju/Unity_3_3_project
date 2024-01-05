@@ -178,24 +178,23 @@ public class PlayerStats_Kys : MonoBehaviour
         Animator ani = GetComponent<Animator>();
         if (collision.gameObject.CompareTag("Ground"))
         {
-
             ani.SetTrigger("JumpEnd");
             ani.SetBool("Jump",false);
             IsJump = false;
             
             State = Player_State.Idle;
         }
-        if (collision.gameObject.CompareTag("Monster") && (State == Player_State.Idle || State == Player_State.Move)) //피격
+        else if (collision.gameObject.CompareTag("Monster") && (State == Player_State.Idle || State == Player_State.Move)) //피격
         {
             State = Player_State.Pain;
         }
 
-        if (collision.gameObject.CompareTag("Monster") && State == Player_State.Attack) // 공격
+        else if (collision.gameObject.CompareTag("Monster") && State == Player_State.Attack) // 공격
         {
             Debug.Log("공격");
             OnHitEvent();
-            
         }
+
 
     }
 
