@@ -20,7 +20,7 @@ public class HpSystem_JY : MonoBehaviour
 
     public float CurrentHp { get; private set; }
 
-    public float MaxHp => _statsHandler.CurrentStats.MaxHp;
+    public float MaxHp => _statsHandler.CurrentStats._MaxHp;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class HpSystem_JY : MonoBehaviour
 
     private void Start()
     {
-        CurrentHp = _statsHandler.CurrentStats.MaxHp;
+        CurrentHp = _statsHandler.CurrentStats._CurrentHp;
     }
 
     private void Update()
@@ -42,6 +42,7 @@ public class HpSystem_JY : MonoBehaviour
                 OnInvincibilityEnd?.Invoke();
             }
         }
+        uiBar.fillAmount = GetPercentage();
     }
 
     public bool ChangeHealth(float change)

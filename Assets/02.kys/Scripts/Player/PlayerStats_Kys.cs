@@ -13,14 +13,14 @@ using UnityEngine.ProBuilder.MeshOperations;
 [Serializable]
 public class PlayerData
 {
-    public string Player_Name = "È«±æµ¿";
-    public int Player_CurrentHp = 100; //ÇöÀçÃ¼·Â
-    public int Player_MaxHp = 100; //ÃÖ´ë Ã¼·Â
-    public int Player_CurrentSp = 100; //ÇöÀç½ºÅÂ¹Ì³ª
-    public int Player_MaxSp = 100; //ÃÖ´ë½ºÅÂ¹Ì³ª
-    public int Player_Atk = 10; //°ø°Ý·Â
-    public int Player_AS = 5; //°ø°Ý¼Óµµ
-    public int Player_MS = 5; //ÀÌµ¿¼Óµµ
+    public string Player_Name = "È«ï¿½æµ¿";
+    public int Player_CurrentHp = 100; //ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½
+    public int Player_MaxHp = 100; //ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½
+    public int Player_CurrentSp = 100; //ï¿½ï¿½ï¿½ç½ºï¿½Â¹Ì³ï¿½
+    public int Player_MaxSp = 100; //ï¿½Ö´ë½ºï¿½Â¹Ì³ï¿½
+    public int Player_Atk = 10; //ï¿½ï¿½ï¿½Ý·ï¿½
+    public int Player_AS = 5; //ï¿½ï¿½ï¿½Ý¼Óµï¿½
+    public int Player_MS = 5; //ï¿½Ìµï¿½ï¿½Óµï¿½
 }
 
 public class PlayerStats_Kys : MonoBehaviour
@@ -28,16 +28,16 @@ public class PlayerStats_Kys : MonoBehaviour
 
     public PlayerData userdata = new PlayerData();
 
-    #region ÇÃ·¹ÀÌ¾î ÀÌµ¿°ü·Ã
-    public InputAction PlayerMove; //ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯
-    [SerializeField] float _speed = 10.0f; //ÀÌµ¿¼Óµµ
+    #region ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½
+    public InputAction PlayerMove; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
+    [SerializeField] float _speed = 10.0f; //ï¿½Ìµï¿½ï¿½Óµï¿½
 
     #endregion
 
     
     float _Radio = 0;
 
-    #region Á¡ÇÁ ±¸Çö
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]float JumpPower = 10.0f;
     private Rigidbody rigid;
     bool IsJump = false;
@@ -53,6 +53,7 @@ public class PlayerStats_Kys : MonoBehaviour
         UnJump,
         Attack,
         Pain,
+        Whirlwind,
         Die
 
     }
@@ -72,7 +73,8 @@ public class PlayerStats_Kys : MonoBehaviour
         GameManager.Input.KeyAction += OnJump;
         GameManager.Input.KeyAction -= OnAttack;
         GameManager.Input.KeyAction += OnAttack;
-        
+        GameManager.Input.KeyAction -= OnWhirlwind;
+        GameManager.Input.KeyAction += OnWhirlwind;
     }
 
     public void Update()
@@ -97,6 +99,9 @@ public class PlayerStats_Kys : MonoBehaviour
             case Player_State.Attack:
                 OnAttack();
                 break;
+            case Player_State.Whirlwind:
+                OnWhirlwind();
+                break;
             case Player_State.Pain:
                 OnPain();
                 break;
@@ -110,7 +115,7 @@ public class PlayerStats_Kys : MonoBehaviour
             return;
     }
 
-    #region ´ë±â
+    #region ï¿½ï¿½ï¿½
     public void OnIdle()
     {
         if (State == Player_State.Die)
@@ -122,7 +127,7 @@ public class PlayerStats_Kys : MonoBehaviour
         ani.SetFloat("Idle_Run_Radio", _Radio);
     }
     #endregion
-    #region ÀÌµ¿
+    #region ï¿½Ìµï¿½
     public void OnMove()
     {
         Animator ani = GetComponent<Animator>();
@@ -151,7 +156,7 @@ public class PlayerStats_Kys : MonoBehaviour
 
     }
     #endregion
-    #region Á¡ÇÁ
+    #region ï¿½ï¿½ï¿½ï¿½
     public void OnJump()
     {
         Animator ani = GetComponent<Animator>();
@@ -178,29 +183,28 @@ public class PlayerStats_Kys : MonoBehaviour
         Animator ani = GetComponent<Animator>();
         if (collision.gameObject.CompareTag("Ground"))
         {
-
             ani.SetTrigger("JumpEnd");
             ani.SetBool("Jump",false);
             IsJump = false;
             
             State = Player_State.Idle;
         }
-        if (collision.gameObject.CompareTag("Monster") && (State == Player_State.Idle || State == Player_State.Move)) //ÇÇ°Ý
+        else if (collision.gameObject.CompareTag("Monster") && (State == Player_State.Idle || State == Player_State.Move)) //ï¿½Ç°ï¿½
         {
             State = Player_State.Pain;
         }
 
-        if (collision.gameObject.CompareTag("Monster") && State == Player_State.Attack) // °ø°Ý
+        if (collision.gameObject.CompareTag("Monster") && (State == Player_State.Attack || State == Player_State.Whirlwind) ) // ï¿½ï¿½ï¿½ï¿½
         {
-            Debug.Log("°ø°Ý");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½");
             OnHitEvent();
-            
         }
+
 
     }
 
 
-    #region °ø°Ý
+    #region ï¿½ï¿½ï¿½ï¿½
     public void OnAttack()
     {
         Animator ani = GetComponent<Animator>();
@@ -221,26 +225,43 @@ public class PlayerStats_Kys : MonoBehaviour
     }
     public void OnHitEvent()
     {
-        
         State = Player_State.Idle;
     }
     #endregion
 
-    #region ÇÇ°Ý
+    #region ï¿½Ç°ï¿½
     public void OnPain()
     {
         if (State == Player_State.Die)
             return;
         if(State == Player_State.Pain)
         {
-            Debug.Log("¾Æ¾ß");
+            Debug.Log("ï¿½Æ¾ï¿½");
             //userdata.Player_CurrentHp -= Monster_kys.Damage;
             State = Player_State.Idle;
         }
     }
     #endregion
+    public void OnWhirlwind()
+    {
+        Animator ani = GetComponent<Animator>();
+        if (Input.GetMouseButton(1))
+        {
+            if (State == Player_State.Die)
+                return;
+            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump)
+            {
+                ani.SetBool("Whirlwind",true);
+            }
+        }
+        else
+        {
+            ani.SetBool("Whirlwind", false);
+            State = Player_State.Idle;
+        }
+    }
 
-    #region Á×À½
+    #region ï¿½ï¿½ï¿½ï¿½
     public void OnDie()
     {
         Animator ani = GetComponent<Animator>();
