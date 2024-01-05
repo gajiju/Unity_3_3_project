@@ -14,9 +14,9 @@ using UnityEngine.ProBuilder.MeshOperations;
 public class PlayerData
 {
     public string Player_Name = "ȫ�浿";
-    public int Player_CurrentHp = 100; //����ü��
+    public int Player_CurrentHp = 50; //����ü��
     public int Player_MaxHp = 100; //�ִ� ü��
-    public int Player_CurrentSp = 100; //���罺�¹̳�
+    public int Player_CurrentSp = 50; //���罺�¹̳�
     public int Player_MaxSp = 100; //�ִ뽺�¹̳�
     public int Player_Atk = 10; //���ݷ�
     public int Player_AS = 5; //���ݼӵ�
@@ -54,8 +54,8 @@ public class PlayerStats_Kys : MonoBehaviour
         Attack,
         Pain,
         Whirlwind,
+        Splint,
         Die
-
     }
 
     Player_State State = Player_State.Idle;
@@ -101,6 +101,9 @@ public class PlayerStats_Kys : MonoBehaviour
                 break;
             case Player_State.Whirlwind:
                 OnWhirlwind();
+                break;
+            case Player_State.Splint:
+                OnSplint();
                 break;
             case Player_State.Pain:
                 OnPain();
@@ -260,6 +263,29 @@ public class PlayerStats_Kys : MonoBehaviour
             State = Player_State.Idle;
         }
     }
+
+    public void OnSplint()
+    {
+        Animator ani = GetComponent<Animator>();
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (State == Player_State.Die)
+                return;
+            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump)
+            {
+                _speed = 15f; 
+                ani.SetBool("Splint", true);
+            }
+        }
+        else
+        {
+            _speed = 10f;
+            ani.SetBool("Splint", false);
+            State = Player_State.Idle;
+        }
+    }
+
+
 
     #region ����
     public void OnDie()
