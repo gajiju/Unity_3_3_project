@@ -179,27 +179,51 @@ public class PlayerStats_Kys : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             ani.SetTrigger("JumpEnd");
-            ani.SetBool("Jump",false);
+            ani.SetBool("Jump", false);
             IsJump = false;
-            
+
             State = Player_State.Idle;
         }
-        else if (collision.gameObject.CompareTag("Monster") && (State == Player_State.Idle || State == Player_State.Move)) //피격
+        else if (collision.gameObject.CompareTag("Monster"))
         {
-            State = Player_State.Pain;
+            if (State == Player_State.Attack)
+            {
+                MonsterAttack monster = GetComponent<MonsterAttack>();
+
+
+            }
+            else if ((State == Player_State.Idle || State == Player_State.Move)) //피격
+            {
+                State = Player_State.Pain;
+            }
         }
-
-        else if (collision.gameObject.CompareTag("Monster") && State == Player_State.Attack) // 공격
-        {
-            Debug.Log("공격");
-            OnHitEvent();
-        }
-
-
     }
 
 
+
     #region 공격
+    public void OnAttack()
+    {
+        Animator ani = GetComponent<Animator>();
+        if (Input.GetMouseButtonDown(0))
+        {
+                ani.SetTrigger("Attack");
+        }
+    }
+    public void OnAttackOnOff()
+    {
+        if(State == Player_State.Idle || State == Player_State.Move || State == Player_State.Jump)
+        {
+            State = Player_State.Attack;
+        }
+        else if(State == Player_State.Attack)
+        {
+            State = Player_State.Idle;
+        }
+    }
+
+
+    /*
     public void OnAttack()
     {
         Animator ani = GetComponent<Animator>();
@@ -218,23 +242,33 @@ public class PlayerStats_Kys : MonoBehaviour
 
         }
     }
-    public void OnHitEvent()
-    {
-        
-        State = Player_State.Idle;
-    }
+    */
+
     #endregion
 
     #region 피격
     public void OnPain()
     {
+        Animator ani = GetComponent<Animator>();
         if (State == Player_State.Die)
             return;
-        if(State == Player_State.Pain)
+        else if(State == Player_State.Pain)
         {
             Debug.Log("아야");
-            //userdata.Player_CurrentHp -= Monster_kys.Damage;
-            State = Player_State.Idle;
+            ani.SetTrigger("Pain");
+
+            /*
+            if(userdata.Player_CurrentHp > 0)
+            {
+            userdata.Player_CurrentHp -= Monster_kys.Damage;
+             State = Player_State.Idle;
+            }
+            if(userdata.Player_CurrentHp <= 0)
+            {
+            userdata.Player_CurrentHp = 0;
+            State = Player_State.Die;
+            }
+            */
         }
     }
     #endregion
