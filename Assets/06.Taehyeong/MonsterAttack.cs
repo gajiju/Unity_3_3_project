@@ -11,7 +11,7 @@ public class MonsterAttack : MonoBehaviour
   public Transform player;
     public bool degree;
     //  public int Hpreducep;
-    public float b_damage = 5;
+    public float b_damage = 1;
     public float speed;
     public float damage = 5;
 
@@ -21,7 +21,7 @@ public class MonsterAttack : MonoBehaviour
         //transform.SetParent(null);
         transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        transform.position += new Vector3(0, 5, 0);
+        transform.position += new Vector3(0, 2, 0);
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -65,14 +65,15 @@ public class MonsterAttack : MonoBehaviour
 
 
     }
-
-   private void OnTriggerEnter(Collider collider)
+    
+   private void OnTriggerExit(Collider collider)
     {
         if (collider.transform.tag == "Player")
         {
           collider.transform.GetComponent<PlayerStats_Kys>().Bulletdamaged(b_damage);
-            Debug.Log("player attack");
             Destroy(gameObject);
+            Debug.Log("player attack");
+           
         }
     }
 

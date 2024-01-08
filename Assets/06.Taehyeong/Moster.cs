@@ -32,6 +32,9 @@ public class Farrange_monster : MonoBehaviour
     public float findanything_time = 3;
     public float find_pertime = 3;
 
+    public float Fire_Cooltime =0;
+    public float Fire_Pertime = 0.4f;
+
     BoxCollider boxCollider;
     Material mat;
 
@@ -56,6 +59,10 @@ public class Farrange_monster : MonoBehaviour
     }
     void FixedUpdate()
     {
+        Fire_Cooltime -= Time.deltaTime;
+
+
+
         findanything_time -= Time.deltaTime;
 
         nextMove = Random.Range(-1, 2);
@@ -182,9 +189,14 @@ public class Farrange_monster : MonoBehaviour
 
     public void Attack()
     {
-        if(be_ranger == true)
+        if(Fire_Cooltime <= 0) 
         {
-            Instantiate(bullet, monster.transform.position, bullet.transform.rotation);
+            if (be_ranger == true)
+            {
+                Instantiate(bullet, monster.transform.position, bullet.transform.rotation);
+                Fire_Cooltime = Fire_Pertime;
+            }
+           
 
            
 

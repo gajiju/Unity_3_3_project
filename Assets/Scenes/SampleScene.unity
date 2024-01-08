@@ -5449,6 +5449,8 @@ MonoBehaviour:
   tra: {fileID: 0}
   findanything_time: 0
   find_pertime: 0
+  Fire_Cooltime: 0
+  Fire_Pertime: 0
 --- !u!1001 &203569956
 PrefabInstance:
   m_ObjectHideFlags: 0
