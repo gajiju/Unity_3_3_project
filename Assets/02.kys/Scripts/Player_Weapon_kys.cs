@@ -11,6 +11,13 @@ public class Player_Weapon_kys : MonoBehaviour
     public float AttackSpeed = 0.5f; //공격 속도
     public BoxCollider meleeArea;
     public TrailRenderer trailEffect;
+    PlayerStatsHandler_JY user_date;
+
+    public void Awake()
+    {
+        user_date = GetComponent<PlayerStatsHandler_JY>();
+    }
+
 
     public void Use()
     {
@@ -18,7 +25,6 @@ public class Player_Weapon_kys : MonoBehaviour
         {
             StopCoroutine("Swing");
             StartCoroutine("Swing");
-           
         }
     }
 
