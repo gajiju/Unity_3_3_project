@@ -14,12 +14,12 @@ public class CharacterStats
 {
     public StatsChangeType statsChangeType;
 
-    public string _Name = "삐삐"; // 이름
-    public float _MaxHp = 100; // 최대 체력
-    public float _CurrentHp = 100; // 현재 체력
-    public float _MaxSp = 100; // 최대 스테미너
-    public float _CurrentSp = 100; // 현재 스테미너
-    public float _Atk = 20f; // 공격력
-    public float _AS = 0.5f; // 공격속도
-    public float _MS = 5; // 이동속도
+    public string _Name; // 이름
+    public float _MaxHp; // 최대 체력
+    public float _CurrentHp; // 현재 체력
+    public float _MaxSp; // 최대 스테미너
+    public float _CurrentSp; // 현재 스테미너
+    public float _Atk; // 공격력
+    public float _AS; // 공격속도
+    public float _MS; // 이동속도
 }

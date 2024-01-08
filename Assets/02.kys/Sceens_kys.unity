@@ -3709,6 +3709,7 @@ GameObject:
   - component: {fileID: 8855052669569073450}
   - component: {fileID: 8855052669569073451}
   - component: {fileID: 8855052669569073452}
+  - component: {fileID: 8855052669569073453}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3887,15 +3888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90fee855dea83340a509de602d6f155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userdata:
-    Player_Name: "\u022B\uFFFD\u6D7F"
-    Player_CurrentHp: 100
-    Player_MaxHp: 100
-    Player_CurrentSp: 100
-    Player_MaxSp: 100
-    Player_Atk: 10
-    Player_AS: 5
-    Player_MS: 5
+  user_date: {fileID: 0}
   PlayerMove:
     m_Name: Player Move
     m_Type: 0
@@ -3905,7 +3898,6 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _speed: 5
   JumpPower: 5
   weapon: {fileID: 1150964035630431786}
 --- !u!23 &8855052669569073452
@@ -3950,6 +3942,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8855052669569073453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189980435237460892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8be93f35052deec4e8f9bb614d6c96c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statsSO: {fileID: 11400000, guid: d3e963892285da44c9cdd58d3b5f83b2, type: 2}
+  baseStats:
+    statsChangeType: 0
+    _Name: "\uC090\uC090"
+    _MaxHp: 100
+    _CurrentHp: 100
+    _MaxSp: 100
+    _CurrentSp: 100
+    _Atk: 20
+    _AS: 0.5
+    _MS: 5
+  statsModifiers: []
 --- !u!4 &8958592389610800995
 Transform:
   m_ObjectHideFlags: 0

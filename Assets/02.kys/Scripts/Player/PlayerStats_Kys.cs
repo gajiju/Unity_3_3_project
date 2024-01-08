@@ -12,7 +12,7 @@ using UnityEngine.ProBuilder;
 using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SocialPlatforms;
 
-[Serializable]
+/*
 public class PlayerData
 {
     public string Player_Name = "ȫ�浿";
@@ -24,11 +24,11 @@ public class PlayerData
     public int Player_AS = 5; //���ݼӵ�
     public int Player_MS = 5; //�̵��ӵ�
 }
-
+*/
 public class PlayerStats_Kys : MonoBehaviour
 {
 
-    public PlayerData userdata = new PlayerData();
+    /* public PlayerData userdata = new PlayerData(); */
 
     public PlayerStatsHandler_JY user_date;
 
@@ -65,6 +65,7 @@ public class PlayerStats_Kys : MonoBehaviour
         UnJump,
         Attack,
         Pain,
+        Long_Ranged_Pain,
         Die
 
     }
@@ -121,7 +122,9 @@ public class PlayerStats_Kys : MonoBehaviour
             case Player_State.Pain:
                 OnPain();
                 break;
-
+            case Player_State.Long_Ranged_Pain:
+                OnLong_Ranged_Pain();
+                break;
 
         }
     }
@@ -239,6 +242,17 @@ public class PlayerStats_Kys : MonoBehaviour
                 State = Player_State.Pain;
             }
         }
+        else if(collision.gameObject.CompareTag("Bullet"))
+        {
+            if (State == Player_State.Attack)
+            {
+
+            }
+            else if ((State == Player_State.Idle || State == Player_State.Move)) //피격
+            {
+                State = Player_State.Long_Ranged_Pain;
+            }
+        }
     }
 
 
@@ -315,7 +329,7 @@ public class PlayerStats_Kys : MonoBehaviour
             
             if(user_date.CurrentStats._CurrentHp > 0)
             {
-                user_date.CurrentStats._CurrentHp -= monster.Monster_Attack;
+                user_date.CurrentStats._CurrentHp -= monster.Monster_Attack; //근거리 피격
                 StartCoroutine(OnPainOn());
                 Debug.Log($" 피격: {monster.Monster_Attack} 현재체력: {user_date.CurrentStats._CurrentHp}");
                 State = Player_State.Idle;
@@ -325,7 +339,33 @@ public class PlayerStats_Kys : MonoBehaviour
             user_date.CurrentStats._CurrentHp = 0;
             State = Player_State.Die;
             }
-            
+        }
+    }
+
+    public void OnLong_Ranged_Pain()
+    {
+        Monster_Kys monster = new Monster_Kys();
+
+        Animator ani = GetComponent<Animator>();
+        if (State == Player_State.Die)
+            return;
+        else if (State == Player_State.Pain)
+        {
+            Debug.Log("아야");
+            ani.SetTrigger("Pain");
+
+            if (user_date.CurrentStats._CurrentHp > 0)
+            {
+                user_date.CurrentStats._CurrentHp -= monster.Monster_Attack; //원거리 피격
+                StartCoroutine(OnPainOn());
+                Debug.Log($" 피격: {monster.Monster_Attack} 현재체력: {user_date.CurrentStats._CurrentHp}");
+                State = Player_State.Idle;
+            }
+            if (user_date.CurrentStats._CurrentHp <= 0)
+            {
+                user_date.CurrentStats._CurrentHp = 0;
+                State = Player_State.Die;
+            }
         }
     }
 
