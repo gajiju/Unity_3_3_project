@@ -7,6 +7,7 @@ public class Monster_GiveExp : MonoBehaviour
     public Transform pos;
     public Vector2 BoxSixe;
     public int exppoint;
+    public int Hpreducep;
  
     void Start()
     {
@@ -23,9 +24,6 @@ public class Monster_GiveExp : MonoBehaviour
                 collider.GetComponent<Player>().getexp(exppoint); //플레이어가 닿으면 플레이어 코드의 경험치를 올려줌
                 Destroy(gameObject);
             }
-
-
-
     }
 
 }

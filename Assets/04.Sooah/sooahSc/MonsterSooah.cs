@@ -20,6 +20,10 @@ public class MonsterSooah : MonoBehaviour
     //    Move,
     //    Attack,
     //}
+
+    Rigidbody rigid;
+    BoxCollider boxCollider;
+    Material mat;
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
@@ -35,6 +39,9 @@ public class MonsterSooah : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rigid = GetComponent<Rigidbody>();
+        boxCollider = GetComponent<BoxCollider>();
+        mat = GetComponent<MeshRenderer>().material;
         playerDistance = Vector3.Distance(transform.position, player.transform.position);
         SetState();
     }
@@ -86,8 +93,34 @@ public class MonsterSooah : MonoBehaviour
     {
         // 사정거리안에 플레이어가 들어오면 플레이어에게 데미지를 입힌다, 애니메이션 on
         
-        playerStats.userdata.Player_CurrentHp -= damage;
+        playerStats.user_date.CurrentStats._CurrentHp -= damage;
         animator.SetTrigger("Attack");
-        Debug.Log(damage + "데미지가 들어갔다 플레이어남은체력은" + playerStats.userdata.Player_CurrentHp);
+        Debug.Log(damage + "데미지가 들어갔다 플레이어남은체력은" + playerStats.user_date.CurrentStats._CurrentHp);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Weapon")
+        {
+            Player_Weapon_kys weapon = other.GetComponent<Player_Weapon_kys>();
+            monsterSOO.maxHP -= weapon.damage;
+            Debug.Log("Melee : " + monsterSOO.maxHP);
+            StartCoroutine(OnDamage());
+            
+        }
+    }
+    IEnumerator OnDamage()
+    {
+        mat.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+
+        if (monsterSOO.maxHP > 0)
+        {
+            mat.color = Color.white;
+        }
+        else
+        {
+            mat.color = Color.gray;
+            Destroy(gameObject, 4);
+        }
     }
 }
