@@ -34,7 +34,7 @@ public class Farrange_monster : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+       player = GameObject.FindGameObjectWithTag("Player").transform;
         //brain = GameObject.FindGameObjectWithTag("brain").transform;
         //  home = transform.position;
         Monster_CurrentHp = Monster_MaxHp;
