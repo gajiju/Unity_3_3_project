@@ -7,24 +7,55 @@ public class MonsterAttack : MonoBehaviour
 {
   //  public Transform pos;
    // public Vector2 BoxSixe;
-  //  public Transform player;
-   
+  public Transform player;
+    public bool degree;
   //  public int Hpreducep;
 
     public float speed;
 
     private void Start()
     {
-      //  player = GameObject.FindGameObjectWithTag("Player").transform;
+        transform.rotation = Quaternion.Euler(0, -0, 0);
+
+
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if (transform.position.x - player.transform.position.x < 0)
+        {
+
+            degree = true;
+
+
+
+        }
+        else if (transform.position.x - player.transform.position.x > 0)
+        {
+
+            degree = false;
+           
+        }
     }
 
 
     void Update()
     {
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+       
+        if (degree == true)
+        {
+            transform.Translate(Vector2.right * speed * Time.deltaTime);
+
+        }
+        else
+        {
+            if(degree == false)
+            {
+                transform.Translate(Vector2.left * speed * Time.deltaTime);
+            }
+        }
 
 
-        
+
+
 
 
 

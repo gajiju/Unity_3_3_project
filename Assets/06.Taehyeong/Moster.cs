@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Farrange_monster : MonoBehaviour
 {
-    public GameObject bullet;
-    public GameObject monster;
+    public Transform bullet;
+    public Transform monster;
     public bool be_ranger;
 
+
+    public float bullet_degree;
     public LayerMask isLayer;
     Rigidbody rigid;
     public int nextMove;
@@ -92,20 +94,45 @@ public class Farrange_monster : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
+
+
+
+
+
+            if (transform.position.x - player.transform.position.x > 0)
+            {
+              //  transform.position -= new Vector3(-speed * Time.deltaTime, 0, 0);
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                
+                
+
+
+            }
+            else if (transform.position.x - player.transform.position.x < 0)
+            {
+              //  transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
+                transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+            else
+            {
+                return;
+            }
+
+
             if (be_ranger == true)
             {
                 transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -Time.deltaTime * speed);
                 
             }
             else
-            {
-                if (be_ranger == false)
+           {
+               if (be_ranger == false)
                 {
                     transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed);
                 }
             }
             following = true;
-            //  Debug.Log("sss");
+              Debug.Log("sss");
            
             Invoke("Attack", nextThinkTime);
 
@@ -131,7 +158,9 @@ public class Farrange_monster : MonoBehaviour
     {
         if(be_ranger == true)
         {
-            Instantiate(bullet, monster.transform);
+            Instantiate(bullet, (monster.transform.position), bullet.transform.rotation);
+
+          //  Instantiate(bullet);
         }
         else
         {
