@@ -30,10 +30,10 @@ public class StartGame : MonoBehaviour
         }
     }
 
-    public void OnMenu(bool value)
-    {
-        startBtn.SetActive(value);
-    }
+    //public void OnMenu(bool value)
+    //{
+    //    startBtn.SetActive(value);
+    //}
 
     public void LoadGameScene()
     {
