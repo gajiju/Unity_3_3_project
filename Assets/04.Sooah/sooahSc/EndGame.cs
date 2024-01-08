@@ -15,24 +15,23 @@ public class EndGame : MonoBehaviour
             if (value)
             {
                 gameOver = value;
+                //Time.timeScale = 0.0f;
                 EndPannel.SetActive(true);
             }
         }
     }
-    // Start is called before the first frame update
-    void Start()
+    public void OnCollisionEnter(Collision collision)
     {
-        
-    }
+        if (collision.gameObject.CompareTag("EndZone"))
+        {
+            EndPannel.SetActive(true);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
     }
 
     public void LoadGameScene()
     {
         SceneManager.LoadScene("SampleScene");
+        //Time.timeScale = 1.0f;
     }
 }
