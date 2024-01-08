@@ -92,7 +92,8 @@ public class MonsterSooah : MonoBehaviour
     private void Attack(int damage)
     {
         // 사정거리안에 플레이어가 들어오면 플레이어에게 데미지를 입힌다, 애니메이션 on
-        
+       
+
         playerStats.user_date.CurrentStats._CurrentHp -= damage;
         animator.SetTrigger("Attack");
         Debug.Log(damage + "데미지가 들어갔다 플레이어남은체력은" + playerStats.user_date.CurrentStats._CurrentHp);
@@ -120,7 +121,7 @@ public class MonsterSooah : MonoBehaviour
         else
         {
             mat.color = Color.gray;
-            Destroy(gameObject, 4);
+            Destroy(gameObject, 2);
         }
     }
 }
