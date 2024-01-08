@@ -54,22 +54,22 @@ public class MonsterAttack : MonoBehaviour
         }
 
 
-
+        
 
 
 
 
     }
 
-  //  private void OnTriggerEnter(Collider collider)
-   // {
-     //   if (collider.transform.tag == "Player")
-      //  {
-       //     collider.transform.GetComponent<Player>().Hp(Hpreducep);
-       //     Debug.Log("player attack");
-      //      Destroy(gameObject);
-      //  }
-  //  }
+   private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.transform.tag == "Player")
+        {
+          //  collider.transform.GetComponent<Player>().Hp(Hpreducep);
+            Debug.Log("player attack");
+            Destroy(gameObject);
+        }
+    }
 
    
 
