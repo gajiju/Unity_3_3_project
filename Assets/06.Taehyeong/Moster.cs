@@ -4,6 +4,7 @@ using UnityEngine;
 public class Farrange_monster : MonoBehaviour
 {
     public GameObject bullet;
+    public GameObject monster;
     public bool be_ranger;
 
     public LayerMask isLayer;
@@ -16,7 +17,7 @@ public class Farrange_monster : MonoBehaviour
     public float speed;
     public Vector2 home;
 
-    public Transform brain;
+   // public Transform brain;
 
     public bool following;
 
@@ -26,11 +27,12 @@ public class Farrange_monster : MonoBehaviour
 
 
     
-    public GameObject exp;
+   // public GameObject exp;
     public Transform tra;
-   
-      
 
+
+    public float findanything_time = 3;
+    public float find_pertime = 3;
 
 
         void Start()
@@ -41,41 +43,52 @@ public class Farrange_monster : MonoBehaviour
         //brain = GameObject.FindGameObjectWithTag("brain").transform;
         //  home = transform.position;
         Monster_CurrentHp = Monster_MaxHp;
- 
+
+        nextThinkTime = 3f;
+
     }
     void FixedUpdate()
     {
+        findanything_time -= Time.deltaTime;
+
+        nextMove = Random.Range(-1, 2);
         if (Monster_CurrentHp <= 0) //경험치 생성
         {
-            Instantiate(exp, tra.position, Quaternion.identity);
+         //   Instantiate(exp, tra.position, Quaternion.identity);
             Destroy(gameObject);
         }
 
 
 
-        rigid.velocity = new Vector2(nextMove, rigid.velocity.y);
+       
     Vector2 frontVec = new Vector2(rigid.position.x + nextMove, rigid.position.y);
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Ground", "Player"));
 
       
 
 
-        if (following == false)
-        {
-            if (rayHit.collider == null)
-            {
-           nextThinkTime = Random.Range(2f, 5f);
-                Invoke("Think", nextThinkTime);
-            }
-            else
-            {
+        
 
+
+        if (findanything_time <= 0)
+        {
+            if (following == false)
+            {
+                if (rayHit.collider == null)
+                {
+                    Think();
+                    findanything_time = find_pertime;
+                }
+              
             }
-        }       
+         
+        }
+
     }
     void Think()
    {
-      nextMove = Random.Range(-1, 2);
+      //  rigid.velocity = new Vector2(nextMove, rigid.velocity.y);
+
    }
 
     private void OnTriggerStay(Collider collision)
@@ -85,6 +98,7 @@ public class Farrange_monster : MonoBehaviour
             if (be_ranger == true)
             {
                 transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -Time.deltaTime * speed);
+                
             }
             else
             {
@@ -123,7 +137,7 @@ public class Farrange_monster : MonoBehaviour
     {
         if(be_ranger == true)
         {
-            Instantiate(bullet);
+            Instantiate(bullet, monster.transform);
         }
         else
         {
