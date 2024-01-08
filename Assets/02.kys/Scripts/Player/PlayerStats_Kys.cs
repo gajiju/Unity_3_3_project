@@ -264,6 +264,7 @@ public class PlayerStats_Kys : MonoBehaviour
         }
         else if(collision.gameObject.CompareTag("Bullet"))
         {
+            Debug.Log("player 데미지 받음");
             if (State == Player_State.Attack)
             {
 

@@ -17,8 +17,11 @@ public class MonsterAttack : MonoBehaviour
 
     private void Start()
     {
-        transform.rotation = Quaternion.Euler(0, -0, 0);
-        transform.position = Vector3.up;
+
+        //transform.SetParent(null);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        transform.position += new Vector3(0, 5, 0);
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
 

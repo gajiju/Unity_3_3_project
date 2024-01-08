@@ -14,7 +14,7 @@ public class Farrange_monster : MonoBehaviour
     float nextThinkTime;
      Animator animator;
 
-     Transform player;
+     public Transform player;
     public float speed;
     public Vector2 home;
 
@@ -184,7 +184,9 @@ public class Farrange_monster : MonoBehaviour
     {
         if(be_ranger == true)
         {
-            Instantiate(bullet, (monster.transform.position), bullet.transform.rotation);
+            Instantiate(bullet, monster.transform.position, bullet.transform.rotation);
+
+           
 
           //  Instantiate(bullet);
         }
