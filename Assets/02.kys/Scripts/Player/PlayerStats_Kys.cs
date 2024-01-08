@@ -368,7 +368,7 @@ public class PlayerStats_Kys : MonoBehaviour
         Animator ani = GetComponent<Animator>();
         if (State == Player_State.Die)
             return;
-        else if (State == Player_State.Pain)
+        else if (State == Player_State.Long_Ranged_Pain)
         {
             Debug.Log("아야");
             ani.SetTrigger("Pain");
