@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 //using UnityEditor.TerrainTools;
@@ -262,9 +263,14 @@ public class PlayerStats_Kys : MonoBehaviour
                 State = Player_State.Pain;
             }
         }
-        else if(collision.gameObject.CompareTag("Bullet"))
+
+         if(collision.gameObject.CompareTag("Bullet"))
         {
+            
             Debug.Log("player 데미지 받음");
+            user_date.CurrentStats._CurrentHp -= 5; //원거리 피격
+            collision.gameObject.SetActive(false);
+
             if (State == Player_State.Attack)
             {
 
@@ -386,6 +392,10 @@ public class PlayerStats_Kys : MonoBehaviour
                 OnDie();
             }
         }
+    }
+    public void Bulletdamaged(float b_damage)
+    {
+        user_date.CurrentStats._CurrentHp -= b_damage;
     }
 
     IEnumerator OnPainOn()

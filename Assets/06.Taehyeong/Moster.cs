@@ -130,7 +130,7 @@ public class Farrange_monster : MonoBehaviour
                 }
             }
             following = true;
-              Debug.Log("sss");
+             // Debug.Log("sss");
            
             Invoke("Attack", nextThinkTime);
 

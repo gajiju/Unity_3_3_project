@@ -10,8 +10,8 @@ public class MonsterAttack : MonoBehaviour
    // public Vector2 BoxSixe;
   public Transform player;
     public bool degree;
-  //  public int Hpreducep;
-
+    //  public int Hpreducep;
+    public float b_damage = 5;
     public float speed;
     public float damage = 5;
 
@@ -70,7 +70,7 @@ public class MonsterAttack : MonoBehaviour
     {
         if (collider.transform.tag == "Player")
         {
-          //  collider.transform.GetComponent<Player>().Hp(Hpreducep);
+          collider.transform.GetComponent<PlayerStats_Kys>().Bulletdamaged(b_damage);
             Debug.Log("player attack");
             Destroy(gameObject);
         }
