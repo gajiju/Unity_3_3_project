@@ -21,11 +21,8 @@ public class Farrange_monster : MonoBehaviour
 
     public bool following;
 
-
     public float Monster_MaxHp;
     public float Monster_CurrentHp;
-
-
     
    // public GameObject exp;
     public Transform tra;
@@ -39,7 +36,7 @@ public class Farrange_monster : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+       player = GameObject.FindGameObjectWithTag("Player").transform;
         //brain = GameObject.FindGameObjectWithTag("brain").transform;
         //  home = transform.position;
         Monster_CurrentHp = Monster_MaxHp;
@@ -121,7 +118,6 @@ public class Farrange_monster : MonoBehaviour
         }
     }
   
-
     private void OnTriggerExit(Collider collision)
     {
         if (collision.transform.CompareTag("Player"))
@@ -130,8 +126,6 @@ public class Farrange_monster : MonoBehaviour
             Debug.Log("벗어남");
         }
     }
-
-
 
     public void Attack()
     {
@@ -147,11 +141,6 @@ public class Farrange_monster : MonoBehaviour
             }
         }
     }
-
-
-    
-
-  
 }
 
     

@@ -7,7 +7,8 @@ TagManager:
   - Ground
   - Monster
   - Item
-  - Bullet
+  - StartZone
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - Wall
   - 
   - 
   - 

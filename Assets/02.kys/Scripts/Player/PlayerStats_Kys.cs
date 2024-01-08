@@ -8,7 +8,9 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
+using UnityEngine.ProBuilder;
 using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.SocialPlatforms;
 
 [Serializable]
 public class PlayerData
@@ -28,22 +30,32 @@ public class PlayerStats_Kys : MonoBehaviour
 
     public PlayerData userdata = new PlayerData();
 
-    #region �÷��̾� �̵�����
-    public InputAction PlayerMove; //�÷��̾� ��Ʈ�ѷ�
-    [SerializeField] float _speed = 10.0f; //�̵��ӵ�
+    public PlayerStatsHandler_JY user_date;
 
+    #region 이동관련
+    public InputAction PlayerMove; //�÷��̾� ��Ʈ�ѷ�
+
+    bool iswall = false; //벽충돌 판단여부
     #endregion
 
     
     float _Radio = 0;
-
-    #region ���� ����
+    #region 공격딜레이
+    #endregion
+    #region 점프
     [SerializeField]float JumpPower = 10.0f;
     private Rigidbody rigid;
     bool IsJump = false;
     #endregion
+    #region 공격쿨타임
+    float fireDelay;
+    bool isAttackReady; 
+    public GameObject weapon;
 
-
+    #endregion
+    #region 피격 그림
+    Material mat;
+    #endregion
 
     public enum Player_State
     {
@@ -53,19 +65,23 @@ public class PlayerStats_Kys : MonoBehaviour
         UnJump,
         Attack,
         Pain,
-        Whirlwind,
         Die
 
     }
 
     Player_State State = Player_State.Idle;
+    SpriteRenderer spriteRenderer;
 
-
+    public void Awake()
+    {
+        user_date = GetComponent<PlayerStatsHandler_JY>();
+    }
 
     public void Start()
     {
         GameManager gmg = GameManager.Instance();
         rigid = GetComponent<Rigidbody>();
+        mat = gameObject.GetComponent<MeshRenderer>().material;
 
         GameManager.Input.KeyAction -= OnMove;
         GameManager.Input.KeyAction += OnMove;
@@ -75,11 +91,14 @@ public class PlayerStats_Kys : MonoBehaviour
         GameManager.Input.KeyAction += OnAttack;
         GameManager.Input.KeyAction -= OnWhirlwind;
         GameManager.Input.KeyAction += OnWhirlwind;
+        GameManager.Input.KeyAction -= OnSplint;
+        GameManager.Input.KeyAction += OnSplint;
     }
 
     public void Update()
     {
-        if(userdata.Player_CurrentHp == 0)
+        
+        if (user_date.CurrentStats._CurrentHp == 0)
         {
             State = Player_State.Die;
             OnDie();
@@ -99,9 +118,6 @@ public class PlayerStats_Kys : MonoBehaviour
             case Player_State.Attack:
                 OnAttack();
                 break;
-            case Player_State.Whirlwind:
-                OnWhirlwind();
-                break;
             case Player_State.Pain:
                 OnPain();
                 break;
@@ -111,11 +127,12 @@ public class PlayerStats_Kys : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (userdata.Player_CurrentHp == 0)
+        if (user_date.CurrentStats._CurrentHp == 0)
             return;
+        StopWall();
     }
 
-    #region ���
+    #region 대기중
     public void OnIdle()
     {
         if (State == Player_State.Die)
@@ -127,7 +144,7 @@ public class PlayerStats_Kys : MonoBehaviour
         ani.SetFloat("Idle_Run_Radio", _Radio);
     }
     #endregion
-    #region �̵�
+    #region 이동
     public void OnMove()
     {
         Animator ani = GetComponent<Animator>();
@@ -137,17 +154,32 @@ public class PlayerStats_Kys : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.5f);
-            transform.position += Vector3.left * Time.deltaTime * _speed;
+            if(iswall)
+            {
+                transform.position += Vector3.left * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += Vector3.left * Time.deltaTime * user_date.CurrentStats._MS;
+                
+            }
             _Radio = Mathf.Lerp(_Radio, 1, 10.0f * Time.deltaTime);
             ani.SetFloat("Idle_Run_Radio", _Radio);
         }
         else if (Input.GetKey(KeyCode.D))
         {
+
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.5f);
-            transform.position += Vector3.right * Time.deltaTime * _speed;
+            if (iswall)
+            {
+                transform.position += Vector3.right * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += Vector3.right * Time.deltaTime * user_date.CurrentStats._MS;
+            }
             _Radio = Mathf.Lerp(_Radio, 1, 10.0f * Time.deltaTime);
             ani.SetFloat("Idle_Run_Radio", _Radio);
-
         }
         else
         {
@@ -155,8 +187,15 @@ public class PlayerStats_Kys : MonoBehaviour
         }
 
     }
+
+    void StopWall() //벽 충돌
+    {
+        
+        //Debug.DrawRay(transform.position, transform.forward, Color.green); 
+        iswall = Physics.Raycast(transform.position, transform.forward,1, LayerMask.GetMask("Wall")) ;
+    }
     #endregion
-    #region ����
+    #region 점프
     public void OnJump()
     {
         Animator ani = GetComponent<Animator>();
@@ -184,27 +223,61 @@ public class PlayerStats_Kys : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             ani.SetTrigger("JumpEnd");
-            ani.SetBool("Jump",false);
+            ani.SetBool("Jump", false);
             IsJump = false;
-            
+
             State = Player_State.Idle;
         }
-        else if (collision.gameObject.CompareTag("Monster") && (State == Player_State.Idle || State == Player_State.Move)) //�ǰ�
+        else if (collision.gameObject.CompareTag("Monster"))
         {
-            State = Player_State.Pain;
+            if (State == Player_State.Attack)
+            {
+
+            }
+            else if ((State == Player_State.Idle || State == Player_State.Move)) //피격
+            {
+                State = Player_State.Pain;
+            }
         }
-
-        if (collision.gameObject.CompareTag("Monster") && (State == Player_State.Attack || State == Player_State.Whirlwind) ) // ����
-        {
-            Debug.Log("����");
-            OnHitEvent();
-        }
-
-
     }
 
 
-    #region ����
+    #region 공격
+    public void OnAttack()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            Player_Weapon_kys eqweapon = weapon.GetComponent<Player_Weapon_kys>();
+            /* 공격 쿨타임
+            fireDelay = Time.deltaTime;
+            isAttackReady = eqweapon.AttackSpeed < fireDelay;
+            */
+            Animator ani = GetComponent<Animator>();
+            State = Player_State.Attack;
+
+            if (State == Player_State.Attack)
+            {
+                eqweapon.Use();
+                ani.SetTrigger("Attack");
+                fireDelay = 0;
+            }
+        }
+    }
+    public void OnAttackOnOff()
+    {
+        if(State == Player_State.Idle || State == Player_State.Move || State == Player_State.Jump)
+        {
+            State = Player_State.Attack;
+        }
+        else if(State == Player_State.Attack)
+        {
+            State = Player_State.Idle;
+        }
+    }
+
+
+    /*
     public void OnAttack()
     {
         Animator ani = GetComponent<Animator>();
@@ -223,25 +296,56 @@ public class PlayerStats_Kys : MonoBehaviour
 
         }
     }
-    public void OnHitEvent()
-    {
-        State = Player_State.Idle;
-    }
+    */
+
     #endregion
 
-    #region �ǰ�
+    #region 피격
     public void OnPain()
     {
+        Monster_Kys monster = new Monster_Kys();
+
+        Animator ani = GetComponent<Animator>();
         if (State == Player_State.Die)
             return;
-        if(State == Player_State.Pain)
+        else if(State == Player_State.Pain)
         {
-            Debug.Log("�ƾ�");
-            //userdata.Player_CurrentHp -= Monster_kys.Damage;
-            State = Player_State.Idle;
+            Debug.Log("아야");
+            ani.SetTrigger("Pain");
+            
+            if(user_date.CurrentStats._CurrentHp > 0)
+            {
+                user_date.CurrentStats._CurrentHp -= monster.Monster_Attack;
+                StartCoroutine(OnPainOn());
+                Debug.Log($" 피격: {monster.Monster_Attack} 현재체력: {user_date.CurrentStats._CurrentHp}");
+                State = Player_State.Idle;
+            }
+            if(user_date.CurrentStats._CurrentHp <= 0)
+            {
+            user_date.CurrentStats._CurrentHp = 0;
+            State = Player_State.Die;
+            }
+            
+        }
+    }
+
+    IEnumerator OnPainOn()
+    {
+        mat.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+
+        if (user_date.CurrentStats._CurrentHp > 0)
+        {
+            mat.color = Color.white;
+        }
+        else
+        {
+            mat.color = Color.gray;
         }
     }
     #endregion
+
+    #region 스킬
     public void OnWhirlwind()
     {
         Animator ani = GetComponent<Animator>();
@@ -251,7 +355,7 @@ public class PlayerStats_Kys : MonoBehaviour
                 return;
             if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump)
             {
-                ani.SetBool("Whirlwind",true);
+                ani.SetBool("Whirlwind", true);
             }
         }
         else
@@ -261,7 +365,30 @@ public class PlayerStats_Kys : MonoBehaviour
         }
     }
 
-    #region ����
+    public void OnSplint()
+    {
+        Animator ani = GetComponent<Animator>();
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (State == Player_State.Die)
+                return;
+            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump ||State == Player_State.Move)
+            {
+                user_date.CurrentStats._MS = 15f; 
+                ani.SetBool("Splint", true);
+            }
+        }
+        else
+        {
+            user_date.CurrentStats._MS = 10f;
+            ani.SetBool("Splint", false);
+            State = Player_State.Idle;
+        }
+    }
+    #endregion
+
+
+    #region 죽음
     public void OnDie()
     {
         Animator ani = GetComponent<Animator>();
