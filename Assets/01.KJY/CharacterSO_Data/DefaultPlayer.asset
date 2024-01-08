@@ -16,8 +16,8 @@ MonoBehaviour:
   _Name: "\uD64D\uAE38\uB3D9"
   _MaxHp: 100
   _CurrentHp: 50
-  _MaxSp: 100
-  _CurrentSp: 50
+  _MaxSp: 500
+  _CurrentSp: 500
   _Atk: 10
   _AS: 5
   _MS: 5
