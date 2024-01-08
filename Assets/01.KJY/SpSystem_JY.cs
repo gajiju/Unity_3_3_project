@@ -76,7 +76,7 @@ public class SpSystem_JY : MonoBehaviour
         if (CanUseWhirlwind())
         {
             CurrentSp -= UseWhirlwind;
-            _playerstats.OnWhirlwind();
+            //_playerstats.OnWhirlwind();
             return true;
         }
         else

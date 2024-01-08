@@ -99,7 +99,7 @@ public class PlayerStats_Kys : MonoBehaviour
                 OnAttack();
                 break;
             case Player_State.Whirlwind:
-                OnWhirlwind();
+                //OnWhirlwind();
                 break;
             case Player_State.Splint:
                 OnSplint();
