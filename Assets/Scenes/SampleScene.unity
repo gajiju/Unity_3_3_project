@@ -52343,6 +52343,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7303113400914994048, guid: 9911c877e995fa144aac2912ac8788ef, type: 3}
+      propertyPath: endGame
+      value: 
+      objectReference: {fileID: 423282132}
+    - target: {fileID: 7303113400914994048, guid: 9911c877e995fa144aac2912ac8788ef, type: 3}
       propertyPath: JumpPower
       value: 20
       objectReference: {fileID: 0}

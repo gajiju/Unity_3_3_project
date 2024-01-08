@@ -27,7 +27,7 @@ public class PlayerData
 */
 public class PlayerStats_Kys : MonoBehaviour
 {
-
+    [SerializeField] private EndGame endGame;
     /* public PlayerData userdata = new PlayerData(); */
 
     #region 플레이어 싱글톤
@@ -37,6 +37,7 @@ public class PlayerStats_Kys : MonoBehaviour
     #endregion
 
     public PlayerStatsHandler_JY user_date;
+    public Animator ani;
 
     #region 이동관련
     public InputAction PlayerMove; //�÷��̾� ��Ʈ�ѷ�
@@ -82,6 +83,7 @@ public class PlayerStats_Kys : MonoBehaviour
     public void Awake()
     {
         user_date = GetComponent<PlayerStatsHandler_JY>();
+        ani = GetComponent<Animator>();
     }
 
     public void Start()
@@ -141,6 +143,19 @@ public class PlayerStats_Kys : MonoBehaviour
         StopWall();
     }
 
+    private void OnDestroy()
+    {
+        GameManager.Input.KeyAction -= OnMove;
+        
+        GameManager.Input.KeyAction -= OnJump;
+        
+        GameManager.Input.KeyAction -= OnAttack;
+        
+        GameManager.Input.KeyAction -= OnWhirlwind;
+        
+        GameManager.Input.KeyAction -= OnSplint;
+    }
+
     #region 대기중
     public void OnIdle()
     {
@@ -156,7 +171,7 @@ public class PlayerStats_Kys : MonoBehaviour
     #region 이동
     public void OnMove()
     {
-        Animator ani = GetComponent<Animator>();
+        //Animator ani = GetComponent<Animator>();
         if (State == Player_State.Die)
             return;
         State = Player_State.Move;
@@ -442,6 +457,9 @@ public class PlayerStats_Kys : MonoBehaviour
         ani.SetTrigger("Die");
        // yield return new WaitForSeconds(0.5f);
         ani.SetTrigger("DieGround");
+        endGame.GameOver = true;
     }
+
+    
     #endregion
 }
