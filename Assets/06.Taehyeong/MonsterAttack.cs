@@ -12,6 +12,7 @@ public class MonsterAttack : MonoBehaviour
   //  public int Hpreducep;
 
     public float speed;
+    public float damage = 5;
 
     private void Start()
     {

@@ -23,8 +23,8 @@ public class Farrange_monster : MonoBehaviour
 
     public bool following;
 
-    public float Monster_MaxHp;
-    public float Monster_CurrentHp;
+    public float Monster_MaxHp = 100;
+    public float Monster_CurrentHp = 100;
     
    // public GameObject exp;
     public Transform tra;
@@ -33,8 +33,17 @@ public class Farrange_monster : MonoBehaviour
     public float findanything_time = 3;
     public float find_pertime = 3;
 
+    BoxCollider boxCollider;
+    Material mat;
 
-        void Start()
+    public void Awake()
+    {
+        boxCollider = GetComponent<BoxCollider>();
+        mat = GetComponent<MeshRenderer>().material;
+    }
+
+
+    void Start()
     {
         rigid = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
@@ -60,7 +69,7 @@ public class Farrange_monster : MonoBehaviour
 
 
        
-    Vector2 frontVec = new Vector2(rigid.position.x + nextMove, rigid.position.y);
+        Vector2 frontVec = new Vector2(rigid.position.x + nextMove, rigid.position.y);
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Ground", "Player"));
 
       
@@ -144,13 +153,41 @@ public class Farrange_monster : MonoBehaviour
             }
         }
     }
-  
+
     private void OnTriggerExit(Collider collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
             following = false;
             Debug.Log("벗어남");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Weapon")
+        {
+            Player_Weapon_kys weapon = other.GetComponent<Player_Weapon_kys>();
+            Monster_CurrentHp -= weapon.damage;
+            Debug.Log("Melee : " + Monster_CurrentHp);
+            StartCoroutine(OnDamage());
+
+        }
+    }
+
+    IEnumerator OnDamage()
+    {
+        mat.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+
+        if (Monster_CurrentHp > 0)
+        {
+            mat.color = Color.white;
+        }
+        else
+        {
+            mat.color = Color.gray;
+            Destroy(gameObject, 4);
         }
     }
 

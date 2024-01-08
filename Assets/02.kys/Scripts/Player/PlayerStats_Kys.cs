@@ -363,7 +363,7 @@ public class PlayerStats_Kys : MonoBehaviour
 
     public void OnLong_Ranged_Pain()
     {
-        Monster_Kys monster = new Monster_Kys();
+        MonsterAttack monster = new MonsterAttack();
 
         Animator ani = GetComponent<Animator>();
         if (State == Player_State.Die)
@@ -375,9 +375,9 @@ public class PlayerStats_Kys : MonoBehaviour
 
             if (user_date.CurrentStats._CurrentHp > 0)
             {
-                user_date.CurrentStats._CurrentHp -= monster.Monster_Attack; //원거리 피격
+                user_date.CurrentStats._CurrentHp -= monster.damage; //원거리 피격
                 StartCoroutine(OnPainOn());
-                Debug.Log($" 피격: {monster.Monster_Attack} 현재체력: {user_date.CurrentStats._CurrentHp}");
+                Debug.Log($" 피격: {monster.damage} 현재체력: {user_date.CurrentStats._CurrentHp}");
                 State = Player_State.Idle;
             }
             if (user_date.CurrentStats._CurrentHp <= 0)
