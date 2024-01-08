@@ -417,11 +417,11 @@ public class PlayerStats_Kys : MonoBehaviour
                 {
                     ani.SetBool("Whirlwind", true);
                 }
-                else
-                {
-                    ani.SetBool("Whirlwind", false);
-                    State = Player_State.Idle;
-                }
+            }
+            else
+            {
+                ani.SetBool("Whirlwind", false);
+                State = Player_State.Idle;
             }
         }
         else
@@ -438,11 +438,21 @@ public class PlayerStats_Kys : MonoBehaviour
         {
             if (State == Player_State.Die)
                 return;
-            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump ||State == Player_State.Move)
+            if (user_date.CurrentStats._CurrentSp >= 10f)
             {
+                if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump ||State == Player_State.Move)
+                {
                 user_date.CurrentStats._MS = 15f; 
                 ani.SetBool("Splint", true);
+                }
             }
+            else
+            {
+                user_date.CurrentStats._MS = 10f;
+                ani.SetBool("Splint", false);
+                State = Player_State.Idle;
+            }
+
         }
         else
         {

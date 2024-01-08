@@ -31,7 +31,7 @@ public class SpSystem_JY : MonoBehaviour
         {
             UseStaminaForWhirlwind();
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && CanUseSplint())
+        if (Input.GetKey(KeyCode.LeftShift) && CanUseSplint())
         {
             UseStaminaForSplint();
         }
@@ -54,7 +54,7 @@ public class SpSystem_JY : MonoBehaviour
     }
     public bool CanUseWhirlwind()
     {
-        return _statsHandler.CurrentStats._CurrentSp >= UseWhirlwind;
+        return _statsHandler.CurrentStats._CurrentSp >= 20f;
     }
     public bool CanUseSplint()
     {
