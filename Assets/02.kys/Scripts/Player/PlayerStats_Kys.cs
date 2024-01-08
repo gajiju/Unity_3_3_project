@@ -73,7 +73,10 @@ public class PlayerStats_Kys : MonoBehaviour
         GameManager.Input.KeyAction += OnJump;
         GameManager.Input.KeyAction -= OnAttack;
         GameManager.Input.KeyAction += OnAttack;
-        
+        GameManager.Input.KeyAction -= OnWhirlwind;
+        GameManager.Input.KeyAction += OnWhirlwind;
+        GameManager.Input.KeyAction -= OnSplint;
+        GameManager.Input.KeyAction += OnSplint;
     }
 
     public void Update()
@@ -287,7 +290,7 @@ public class PlayerStats_Kys : MonoBehaviour
         {
             if (State == Player_State.Die)
                 return;
-            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump)
+            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump ||State == Player_State.Move)
             {
                 _speed = 15f; 
                 ani.SetBool("Splint", true);
