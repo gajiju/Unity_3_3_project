@@ -78,7 +78,6 @@ public class PlayerStats_Kys : MonoBehaviour
     }
 
     Player_State State = Player_State.Idle;
-    SpriteRenderer spriteRenderer;
 
     public void Awake()
     {
@@ -109,7 +108,6 @@ public class PlayerStats_Kys : MonoBehaviour
         
         if (user_date.CurrentStats._CurrentHp == 0)
         {
-            State = Player_State.Die;
             OnDie();
         }
 
@@ -133,13 +131,14 @@ public class PlayerStats_Kys : MonoBehaviour
             case Player_State.Long_Ranged_Pain:
                 OnLong_Ranged_Pain();
                 break;
-
         }
     }
     private void FixedUpdate()
     {
-        if (user_date.CurrentStats._CurrentHp == 0)
-            return;
+        if (user_date.CurrentStats._CurrentHp <= 0)
+        {
+            OnDie();
+        }
         StopWall();
     }
 
@@ -357,8 +356,7 @@ public class PlayerStats_Kys : MonoBehaviour
             }
             if(user_date.CurrentStats._CurrentHp <= 0)
             {
-            user_date.CurrentStats._CurrentHp = 0;
-            State = Player_State.Die;
+            OnDie();
             }
         }
     }
@@ -384,8 +382,7 @@ public class PlayerStats_Kys : MonoBehaviour
             }
             if (user_date.CurrentStats._CurrentHp <= 0)
             {
-                user_date.CurrentStats._CurrentHp = 0;
-                State = Player_State.Die;
+                OnDie();
             }
         }
     }
@@ -414,9 +411,17 @@ public class PlayerStats_Kys : MonoBehaviour
         {
             if (State == Player_State.Die)
                 return;
-            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump)
+            if (user_date.CurrentStats._CurrentSp >= 20f)
             {
-                ani.SetBool("Whirlwind", true);
+                if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump||State == Player_State.Move)
+                {
+                    ani.SetBool("Whirlwind", true);
+                }
+                else
+                {
+                    ani.SetBool("Whirlwind", false);
+                    State = Player_State.Idle;
+                }
             }
         }
         else

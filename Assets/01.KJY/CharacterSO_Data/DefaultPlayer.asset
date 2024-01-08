@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85e47749293fe5409b229895621dc1e, type: 3}
   m_Name: DefaultPlayer
   m_EditorClassIdentifier: 
-  statsChangeType: 0
+  statsChangeType: 2
   _Name: "\uD64D\uAE38\uB3D9"
   _MaxHp: 100
-  _CurrentHp: 90
+  _CurrentHp: 50
   _MaxSp: 100
-  _CurrentSp: 90
+  _CurrentSp: 50
   _Atk: 10
   _AS: 5
   _MS: 5

@@ -18,7 +18,6 @@ public class HpSystem_JY : MonoBehaviour
     public event Action OnInvincibilityEnd;
     public Image uiBar;
 
-    public float CurrentHp { get; private set; }
 
     public float MaxHp => _statsHandler.CurrentStats._MaxHp;
 
@@ -27,10 +26,6 @@ public class HpSystem_JY : MonoBehaviour
         _statsHandler = GetComponent<PlayerStatsHandler_JY>();
     }
 
-    private void Start()
-    {
-        CurrentHp = _statsHandler.CurrentStats._CurrentHp;
-    }
 
     private void Update()
     {
@@ -42,45 +37,45 @@ public class HpSystem_JY : MonoBehaviour
                 OnInvincibilityEnd?.Invoke();
             }
         }
-        //uiBar.fillAmount = GetPercentage();
+        uiBar.fillAmount = GetPercentage();
     }
 
-    public bool ChangeHealth(float change)
-    {
-        if (change == 0 || _timeSinceLastChange < HpChangeDelay)
-        {
-            return false;
-        }
+    //public bool ChangeHealth(float change)
+    //{
+    //    if (change == 0 || _timeSinceLastChange < HpChangeDelay)
+    //    {
+    //        return false;
+    //    }
 
-        _timeSinceLastChange = 0f;
-        CurrentHp += change;
-        CurrentHp = CurrentHp > MaxHp ? MaxHp : CurrentHp;
-        CurrentHp = CurrentHp < 0 ? 0 : CurrentHp;
+    //    _timeSinceLastChange = 0f;
+    //    CurrentHp += change;
+    //    CurrentHp = CurrentHp > MaxHp ? MaxHp : CurrentHp;
+    //    CurrentHp = CurrentHp < 0 ? 0 : CurrentHp;
 
-        if (change > 0)
-        {
-            OnHeal?.Invoke();
-        }
-        else
-        {
-            OnDamage?.Invoke();
-        }
+    //    if (change > 0)
+    //    {
+    //        OnHeal?.Invoke();
+    //    }
+    //    else
+    //    {
+    //        OnDamage?.Invoke();
+    //    }
 
-        if (CurrentHp <= 0f)
-        {
-            CallDeath();
-        }
+    //    if (CurrentHp <= 0f)
+    //    {
+    //        CallDeath();
+    //    }
 
-        return true;
-    }
+    //    return true;
+    //}
 
-    private void CallDeath()
-    {
-        OnDeath?.Invoke();
-    }
+    //private void CallDeath()
+    //{
+    //    OnDeath?.Invoke();
+    //}
     public float GetPercentage()
     {
-        return CurrentHp / MaxHp;
+        return _statsHandler.CurrentStats._CurrentHp / MaxHp;
     }
 }
 

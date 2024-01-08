@@ -5,7 +5,6 @@ using UnityEngine;
 // 플레이어 따라가게 하기
 public class MonsterSooah : MonoBehaviour
 {
-    private float MonsterMove = 0;
     [SerializeField] private GameObject player;
     [SerializeField] private MonsterSOO monsterSOO;
     private Animator animator;
@@ -30,11 +29,6 @@ public class MonsterSooah : MonoBehaviour
         
         playerStats = player.GetComponent<PlayerStats_Kys>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -52,7 +46,7 @@ public class MonsterSooah : MonoBehaviour
         
         if (playerDistance <= monsterSOO.AttackRange)
         {
-            Debug.Log("어택");
+            //Debug.Log("어택");
             attackDelayTime += Time.deltaTime;
             if(attackDelayTime >= 1)
             {
@@ -62,7 +56,7 @@ public class MonsterSooah : MonoBehaviour
         }
         else if(playerDistance <= monsterSOO.FollowRange)
         {
-            Debug.Log("무브");
+            //Debug.Log("무브");
             Move();
         }
     }
@@ -96,7 +90,7 @@ public class MonsterSooah : MonoBehaviour
 
         playerStats.user_date.CurrentStats._CurrentHp -= damage;
         animator.SetTrigger("Attack");
-        Debug.Log(damage + "데미지가 들어갔다 플레이어남은체력은" + playerStats.user_date.CurrentStats._CurrentHp);
+        //Debug.Log(damage + "데미지가 들어갔다 플레이어남은체력은" + playerStats.user_date.CurrentStats._CurrentHp);
     }
     private void OnTriggerEnter(Collider other)
     {

@@ -77,29 +77,19 @@ public class Items : MonoBehaviour
             case "Player_Atk_Up":
                 playerStats.user_date.CurrentStats._Atk += item.stats[0].value;
                 buffTime = item.stats[0].buffTime;
-                if (buffTime < 0)
-                {
-                    playerStats.user_date.CurrentStats._Atk -= item.stats[0].value;
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
+
                 break;
             case "Player_AS_Up":
                 playerStats.user_date.CurrentStats._AS += item.stats[0].value;
                 buffTime = item.stats[0].buffTime;
-                if (buffTime < 0)
-                {
-                    playerStats.user_date.CurrentStats._AS -= item.stats[0].value;
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
                 break;
             case "Player_MS_Up":
                 playerStats.user_date.CurrentStats._MS += item.stats[0].value;
                 buffTime = item.stats[0].buffTime;
-                if (buffTime < 0)
-                {
-                    playerStats.user_date.CurrentStats._MS -= item.stats[0].value;
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
+
                 break;
         }
     }

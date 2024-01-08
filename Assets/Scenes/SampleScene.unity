@@ -52367,6 +52367,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 865581360147957945, guid: 9911c877e995fa144aac2912ac8788ef, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1637805267}
+    - targetCorrespondingSourceObject: {fileID: 865581360147957945, guid: 9911c877e995fa144aac2912ac8788ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1637805269}
+    - targetCorrespondingSourceObject: {fileID: 865581360147957945, guid: 9911c877e995fa144aac2912ac8788ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1637805268}
   m_SourcePrefab: {fileID: 100100000, guid: 9911c877e995fa144aac2912ac8788ef, type: 3}
 --- !u!1001 &1604431757
 PrefabInstance:
@@ -52568,6 +52574,37 @@ ConstantForce:
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
+--- !u!114 &1637805268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637805250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b403c81aa18c89c40a1a3c130d5ad727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiBar: {fileID: 1322325499}
+  recoveryRate: 5
+  UseWhirlwind: 30
+  UseSplint: 15
+  recoveryInterval: 1
+--- !u!114 &1637805269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637805250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e2283b671b07f459b9d0eea82f9273, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HpChangeDelay: 0.5
+  uiBar: {fileID: 1883809298}
 --- !u!1001 &1638067750
 PrefabInstance:
   m_ObjectHideFlags: 0

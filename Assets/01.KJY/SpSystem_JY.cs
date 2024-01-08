@@ -6,27 +6,19 @@ using UnityEngine.UI;
 public class SpSystem_JY : MonoBehaviour
 {
     private PlayerStatsHandler_JY _statsHandler;
-    private PlayerStats_Kys _playerstats;
 
     public Image uiBar;
-    public float recoveryRate = 5f;
-    public float UseWhirlwind = 20f;
-    public float UseSplint = 1f;
+    private float recoveryRate = 5f;
+    private float UseWhirlwind = 30f;
+    private float UseSplint = 15f;
 
-    public float CurrentSp {  get; private set; }
-    public float MaxSp => _statsHandler.CurrentStats._MaxSp;
+    private float MaxSp => _statsHandler.CurrentStats._MaxSp;
 
-    public float recoveryInterval = 1f;
+    private float recoveryInterval = 1f;
 
     private void Awake()
     {
         _statsHandler = GetComponent<PlayerStatsHandler_JY>();
-        _playerstats = GetComponent<PlayerStats_Kys>();
-    }
-
-    void Start()
-    {
-        CurrentSp = _statsHandler.CurrentStats._CurrentSp;
     }
 
     void Update()
@@ -47,27 +39,26 @@ public class SpSystem_JY : MonoBehaviour
 
     private void UpdateStamina()
     {
-        if (CurrentSp < MaxSp)
+        if (_statsHandler.CurrentStats._CurrentSp < MaxSp)
         {
-            float recoveryAmount = recoveryRate * Time.deltaTime;
-            CurrentSp = Mathf.Min(CurrentSp + recoveryAmount, MaxSp);
+            RecoverStamina();
         }
     }
     public void RecoverStamina()
     {
-        if (CurrentSp < MaxSp)
+        if (_statsHandler.CurrentStats._CurrentSp < MaxSp)
         {
             float recoveryAmount = recoveryRate * Time.deltaTime;
-            CurrentSp = Mathf.Min(CurrentSp + recoveryAmount, MaxSp);
+            _statsHandler.CurrentStats._CurrentSp = Mathf.Min(_statsHandler.CurrentStats._CurrentSp + recoveryAmount, MaxSp);
         }
     }
     public bool CanUseWhirlwind()
     {
-        return CurrentSp >= UseWhirlwind;
+        return _statsHandler.CurrentStats._CurrentSp >= UseWhirlwind;
     }
     public bool CanUseSplint()
     {
-        return CurrentSp >= 10f;
+        return _statsHandler.CurrentStats._CurrentSp >= 10f;
     }
 
 
@@ -75,8 +66,7 @@ public class SpSystem_JY : MonoBehaviour
     {
         if (CanUseWhirlwind())
         {
-            CurrentSp -= UseWhirlwind;
-            //_playerstats.OnWhirlwind();
+            _statsHandler.CurrentStats._CurrentSp -= UseWhirlwind * Time.deltaTime;
             return true;
         }
         else
@@ -89,19 +79,17 @@ public class SpSystem_JY : MonoBehaviour
     {
         if (CanUseSplint())
         {
-            CurrentSp -= UseSplint;
-            _playerstats.OnSplint();
+            _statsHandler.CurrentStats._CurrentSp -= UseSplint * Time.deltaTime;
             return true;
         }
         else
         {
-
             return false;
         }
     }
 
     public float GetPercentage()
     {
-        return CurrentSp / MaxSp;
+        return _statsHandler.CurrentStats._CurrentSp / MaxSp;
     }
 }
