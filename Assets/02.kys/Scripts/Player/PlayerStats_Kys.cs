@@ -338,6 +338,24 @@ public class PlayerStats_Kys : MonoBehaviour
         }
     }
     #endregion
+    public void OnWhirlwind()
+    {
+        Animator ani = GetComponent<Animator>();
+        if (Input.GetMouseButton(1))
+        {
+            if (State == Player_State.Die)
+                return;
+            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump)
+            {
+                ani.SetBool("Whirlwind", true);
+            }
+        }
+        else
+        {
+            ani.SetBool("Whirlwind", false);
+            State = Player_State.Idle;
+        }
+    }
 
     public void OnSplint()
     {
