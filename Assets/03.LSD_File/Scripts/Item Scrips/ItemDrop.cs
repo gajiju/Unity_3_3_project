@@ -29,7 +29,6 @@ public class ItemDrop : MonoBehaviour
         {
             if(!collision.isTrigger)
             {
-                Debug.Log("아이템 박스를 열었다.");
                 DropItem();
             }
         }

@@ -15,6 +15,6 @@ MonoBehaviour:
   itemName: Player_CurrentHp_Up
   stats:
   - name: Player_CurrentHp
-    value: 1
+    value: 30
     buffTime: 0
   prefab: {fileID: 3171344808555012359, guid: f281bc33191a33d48aaa6b157ebaa913, type: 3}
