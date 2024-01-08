@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveToZone : MonoBehaviour
 {
+    public GameObject startGame;
     public GameObject stage;
     public void OnCollisionEnter(Collision collision)
     {
@@ -15,9 +16,14 @@ public class MoveToZone : MonoBehaviour
 
         }
     }
+    private void Start()
+    {
+        startGame.SetActive(true);
+        Invoke("HidePanel", 1f);
+    }
     void HidePanel()
     {
         stage.SetActive(false);
-
+        startGame.SetActive(false);
     }
 }
