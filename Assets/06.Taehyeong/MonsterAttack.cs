@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MonsterAttack : MonoBehaviour
 {
+    public GameObject bullet;
   //  public Transform pos;
    // public Vector2 BoxSixe;
   public Transform player;
@@ -16,8 +17,11 @@ public class MonsterAttack : MonoBehaviour
 
     private void Start()
     {
-        transform.rotation = Quaternion.Euler(0, -0, 0);
 
+        //transform.SetParent(null);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        transform.position += new Vector3(0, 5, 0);
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
