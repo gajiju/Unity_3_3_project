@@ -406,6 +406,7 @@ public class PlayerStats_Kys : MonoBehaviour
     #region 스킬
     public void OnWhirlwind()
     {
+        Player_Weapon_kys eqweapon = weapon.GetComponent<Player_Weapon_kys>();
         Animator ani = GetComponent<Animator>();
         if (Input.GetMouseButton(1))
         {
@@ -415,6 +416,7 @@ public class PlayerStats_Kys : MonoBehaviour
             {
                 if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump||State == Player_State.Move)
                 {
+                    eqweapon.Use();
                     ani.SetBool("Whirlwind", true);
                 }
             }
