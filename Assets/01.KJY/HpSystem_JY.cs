@@ -42,7 +42,7 @@ public class HpSystem_JY : MonoBehaviour
                 OnInvincibilityEnd?.Invoke();
             }
         }
-        uiBar.fillAmount = GetPercentage();
+        //uiBar.fillAmount = GetPercentage();
     }
 
     public bool ChangeHealth(float change)
