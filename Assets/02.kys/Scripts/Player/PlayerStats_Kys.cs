@@ -30,6 +30,12 @@ public class PlayerStats_Kys : MonoBehaviour
 
     /* public PlayerData userdata = new PlayerData(); */
 
+    #region 플레이어 싱글톤
+    static PlayerStats_Kys Player_instance;
+
+    public static PlayerStats_Kys Player_Instance { get { return Player_instance; } }
+    #endregion
+
     public PlayerStatsHandler_JY user_date;
 
     #region 이동관련
