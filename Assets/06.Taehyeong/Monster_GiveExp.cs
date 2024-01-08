@@ -7,6 +7,7 @@ public class Monster_GiveExp : MonoBehaviour
     public Transform pos;
     public Vector2 BoxSixe;
     public int exppoint;
+    public int Hpreducep;
  
     void Start()
     {
