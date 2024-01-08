@@ -9,6 +9,8 @@ TagManager:
   - Item
   - StartZone
   - Weapon
+  - EndZone
+  - Bullet
   layers:
   - Default
   - TransparentFX

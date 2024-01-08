@@ -27,10 +27,17 @@ public class PlayerData
 */
 public class PlayerStats_Kys : MonoBehaviour
 {
-
+    [SerializeField] private EndGame endGame;
     /* public PlayerData userdata = new PlayerData(); */
 
+    #region 플레이어 싱글톤
+    static PlayerStats_Kys Player_instance;
+
+    public static PlayerStats_Kys Player_Instance { get { return Player_instance; } }
+    #endregion
+
     public PlayerStatsHandler_JY user_date;
+    public Animator ani;
 
     #region 이동관련
     public InputAction PlayerMove; //�÷��̾� ��Ʈ�ѷ�
@@ -71,11 +78,11 @@ public class PlayerStats_Kys : MonoBehaviour
     }
 
     Player_State State = Player_State.Idle;
-    SpriteRenderer spriteRenderer;
 
     public void Awake()
     {
         user_date = GetComponent<PlayerStatsHandler_JY>();
+        ani = GetComponent<Animator>();
     }
 
     public void Start()
@@ -101,7 +108,6 @@ public class PlayerStats_Kys : MonoBehaviour
         
         if (user_date.CurrentStats._CurrentHp == 0)
         {
-            State = Player_State.Die;
             OnDie();
         }
 
@@ -125,14 +131,28 @@ public class PlayerStats_Kys : MonoBehaviour
             case Player_State.Long_Ranged_Pain:
                 OnLong_Ranged_Pain();
                 break;
-
         }
     }
     private void FixedUpdate()
     {
-        if (user_date.CurrentStats._CurrentHp == 0)
-            return;
+        if (user_date.CurrentStats._CurrentHp <= 0)
+        {
+            OnDie();
+        }
         StopWall();
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Input.KeyAction -= OnMove;
+        
+        GameManager.Input.KeyAction -= OnJump;
+        
+        GameManager.Input.KeyAction -= OnAttack;
+        
+        GameManager.Input.KeyAction -= OnWhirlwind;
+        
+        GameManager.Input.KeyAction -= OnSplint;
     }
 
     #region 대기중
@@ -150,7 +170,7 @@ public class PlayerStats_Kys : MonoBehaviour
     #region 이동
     public void OnMove()
     {
-        Animator ani = GetComponent<Animator>();
+        //Animator ani = GetComponent<Animator>();
         if (State == Player_State.Die)
             return;
         State = Player_State.Move;
@@ -336,8 +356,7 @@ public class PlayerStats_Kys : MonoBehaviour
             }
             if(user_date.CurrentStats._CurrentHp <= 0)
             {
-            user_date.CurrentStats._CurrentHp = 0;
-            State = Player_State.Die;
+            OnDie();
             }
         }
     }
@@ -363,8 +382,7 @@ public class PlayerStats_Kys : MonoBehaviour
             }
             if (user_date.CurrentStats._CurrentHp <= 0)
             {
-                user_date.CurrentStats._CurrentHp = 0;
-                State = Player_State.Die;
+                OnDie();
             }
         }
     }
@@ -388,14 +406,24 @@ public class PlayerStats_Kys : MonoBehaviour
     #region 스킬
     public void OnWhirlwind()
     {
+        Player_Weapon_kys eqweapon = weapon.GetComponent<Player_Weapon_kys>();
         Animator ani = GetComponent<Animator>();
         if (Input.GetMouseButton(1))
         {
             if (State == Player_State.Die)
                 return;
-            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump)
+            if (user_date.CurrentStats._CurrentSp >= 20f)
             {
-                ani.SetBool("Whirlwind", true);
+                if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump||State == Player_State.Move)
+                {
+                    eqweapon.Use();
+                    ani.SetBool("Whirlwind", true);
+                }
+            }
+            else
+            {
+                ani.SetBool("Whirlwind", false);
+                State = Player_State.Idle;
             }
         }
         else
@@ -412,11 +440,21 @@ public class PlayerStats_Kys : MonoBehaviour
         {
             if (State == Player_State.Die)
                 return;
-            if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump ||State == Player_State.Move)
+            if (user_date.CurrentStats._CurrentSp >= 10f)
             {
+                if (State == Player_State.Idle || State == Player_State.Attack || State == Player_State.Jump ||State == Player_State.Move)
+                {
                 user_date.CurrentStats._MS = 15f; 
                 ani.SetBool("Splint", true);
+                }
             }
+            else
+            {
+                user_date.CurrentStats._MS = 10f;
+                ani.SetBool("Splint", false);
+                State = Player_State.Idle;
+            }
+
         }
         else
         {
@@ -436,6 +474,9 @@ public class PlayerStats_Kys : MonoBehaviour
         ani.SetTrigger("Die");
        // yield return new WaitForSeconds(0.5f);
         ani.SetTrigger("DieGround");
+        endGame.GameOver = true;
     }
+
+    
     #endregion
 }

@@ -1,19 +1,29 @@
 using UnityEngine;
+using static PlayerStats_Kys;
 
 public class Items : MonoBehaviour
 {
     [SerializeField] private ItemSO itemSO;
+    private PlayerStats_Kys playerStats;
+    private GameObject player;
+    private float buffTime = 0f;
 
     private Collider itemCollider;
 
     private void Awake()
     {
         itemCollider = GetComponent<Collider>();
+        player = GameObject.Find("Player");
+        playerStats = player.GetComponent<PlayerStats_Kys>();
 
         if (gameObject != null)
         {
             Invoke("ActiveItemCollider", 1f);
         }
+    }
+    private void Update()
+    {
+        buffTime -= Time.deltaTime;
     }
 
     /// <summary>
@@ -37,7 +47,6 @@ public class Items : MonoBehaviour
             if (!collision.isTrigger)
             {
                 ItemPickup();
-                Destroy(gameObject);
             }
         }
     }
@@ -58,19 +67,29 @@ public class Items : MonoBehaviour
         switch (item.itemName)
         {
             case "Player_CurrentHp_Up":
-                Debug.Log("현재 체력 증가");
+                playerStats.user_date.CurrentStats._CurrentHp += item.stats[0].value;
+                Destroy(gameObject);
                 break;
             case "Player_CurrentSp_Up":
-                Debug.Log("현재 스태미나 증가");
+                playerStats.user_date.CurrentStats._CurrentSp += item.stats[0].value;
+                Destroy(gameObject);
                 break;
             case "Player_Atk_Up":
-                Debug.Log("공격력 증가");
+                playerStats.user_date.CurrentStats._Atk += item.stats[0].value;
+                buffTime = item.stats[0].buffTime;
+                Destroy(gameObject);
+
                 break;
             case "Player_AS_Up":
-                Debug.Log("공격속도 증가");
+                playerStats.user_date.CurrentStats._AS += item.stats[0].value;
+                buffTime = item.stats[0].buffTime;
+                Destroy(gameObject);
                 break;
             case "Player_MS_Up":
-                Debug.Log("이동속도 증가");
+                playerStats.user_date.CurrentStats._MS += item.stats[0].value;
+                buffTime = item.stats[0].buffTime;
+                Destroy(gameObject);
+
                 break;
         }
     }

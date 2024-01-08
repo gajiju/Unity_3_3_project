@@ -6,7 +6,7 @@ using UnityEngine;
 public class MonsterSOO : ScriptableObject
 {
     [field: SerializeField] public float FollowRange { get; private set; } = 10f;
-    [field: SerializeField] public float AttackRange { get; private set; } = 1.5f;
+    [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public int Damage { get; set; }
     [field: SerializeField] public float speed { get; set; }
     [field: SerializeField] public int maxHP { get; set; }

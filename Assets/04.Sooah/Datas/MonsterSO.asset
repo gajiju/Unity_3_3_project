@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MonsterSO
   m_EditorClassIdentifier: 
   <FollowRange>k__BackingField: 10
-  <AttackRange>k__BackingField: 1.5
+  <AttackRange>k__BackingField: 3
   <Damage>k__BackingField: 5
   <speed>k__BackingField: 2
-  <maxHP>k__BackingField: 10
+  <maxHP>k__BackingField: -290
