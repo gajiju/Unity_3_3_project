@@ -6,6 +6,7 @@ public class Farrange_monster : MonoBehaviour
     public Transform bullet;
     public Transform monster;
     public bool be_ranger;
+    public GameObject itself;
 
 
     public LayerMask isLayer;
@@ -66,10 +67,11 @@ public class Farrange_monster : MonoBehaviour
         findanything_time -= Time.deltaTime;
 
         nextMove = Random.Range(-1, 2);
+
         if (Monster_CurrentHp <= 0) //경험치 생성
         {
          //   Instantiate(exp, tra.position, Quaternion.identity);
-            Destroy(gameObject);
+            Destroy(itself);
         }
 
 
@@ -173,18 +175,16 @@ public class Farrange_monster : MonoBehaviour
 
     IEnumerator OnDamage()
     {
-        mat.color = Color.red;
+        
         yield return new WaitForSeconds(0.1f);
 
-        if (Monster_CurrentHp > 0)
+        if (Monster_CurrentHp <= 0)
         {
-            mat.color = Color.white;
+           Destroy(itself);
         }
-        else
-        {
-            mat.color = Color.gray;
-            Destroy(gameObject, 4);
-        }
+            
+          
+        
     }
 
     public void Attack()
